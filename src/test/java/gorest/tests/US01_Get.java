@@ -77,35 +77,26 @@ public class US01_Get {
     public void TC05() {
 
         List<Integer> idList=json.getList("data.id");
-//       System.out.println(idList);
+      System.out.println(idList);
        boolean check=true;
-        for (int i = 0; i <idList.size()-1 ; i++) {  //57
-            for (int j =i+1 ; j <idList.size() ; j++) {  //58
-                System.out.println("i " +idList.get(i) +" j " + idList.get(j));
-                if(idList.get(i)>idList.get(j)){
-                    check=false;
-                    break;
-                }
+
+
+//////////////tek for ile
+        for (int i =0 ; i <idList.size()-1 ; i++) {
+            System.out.println("i " +idList.get(i) +" j " + idList.get(i+1));
+            if(idList.get(i)>idList.get(i+1)){//kucukten buyuge dogru siralanmiyorsa ilk false oldugunda donguyu kirar
+                check=false;
+                break;
             }
         }
         Assert.assertFalse(check);
 
-//////////////tek for ile
-//        for (int i =0 ; i <idList.size()-1 ; i++) {
-//            System.out.println("i " +idList.get(i) +" j " + idList.get(i+1));
-//            if(idList.get(i)>idList.get(i+1)){//kucukten buyuge dogru siralanmiyorsa ilk false oldugunda donguyu kirar
-//                check=false;
-//                break;
-//            }
-//        }
-//        Assert.assertFalse(check);
-//
-//
-//        /////3.yol Set ile
-//
-//        List<Integer> idList2=new ArrayList<>(idList);
-//        Collections.sort(idList2); //dogal siralama yapar
-//        Assert.assertNotEquals(idList,idList2);
+
+        /////3.yol Set ile
+
+        List<Integer> idList2=new ArrayList<>(idList);
+        Collections.sort(idList2); //dogal siralama yapar
+        Assert.assertNotEquals(idList,idList2);
 
     }
 
