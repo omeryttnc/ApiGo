@@ -10,8 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
@@ -37,7 +36,6 @@ public class US01_Get {
 
         //  response.prettyPrint();
         // response.prettyPeek();
-        // System.out.println(response.statusCode());
         json = response.jsonPath();
 
     }
@@ -73,4 +71,49 @@ public class US01_Get {
 
         //response.then().assertThat().body("meta.pagination.pages",equalTo(20));//not equals kullanamiyoruz
     }
+
+    //id natural order assertion
+    @Test
+    public void TC05() {
+
+        List<Integer> idList=json.getList("data.id");
+//       System.out.println(idList);
+       boolean check=true;
+        for (int i = 0; i <idList.size()-1 ; i++) {  //57
+            for (int j =i+1 ; j <idList.size() ; j++) {  //58
+                System.out.println("i " +idList.get(i) +" j " + idList.get(j));
+                if(idList.get(i)>idList.get(j)){
+                    check=false;
+                    break;
+                }
+            }
+        }
+        Assert.assertFalse(check);
+
+//////////////tek for ile
+//        for (int i =0 ; i <idList.size()-1 ; i++) {
+//            System.out.println("i " +idList.get(i) +" j " + idList.get(i+1));
+//            if(idList.get(i)>idList.get(i+1)){//kucukten buyuge dogru siralanmiyorsa ilk false oldugunda donguyu kirar
+//                check=false;
+//                break;
+//            }
+//        }
+//        Assert.assertFalse(check);
+//
+//
+//        /////3.yol Set ile
+//
+//        List<Integer> idList2=new ArrayList<>(idList);
+//        Collections.sort(idList2); //dogal siralama yapar
+//        Assert.assertNotEquals(idList,idList2);
+
+    }
+
+
+
+
+
+
+
+
 }
