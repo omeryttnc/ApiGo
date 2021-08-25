@@ -77,10 +77,9 @@ public class US01_Get {
     public void TC05() {
 
         List<Integer> idList=json.getList("data.id");
-//       System.out.println(idList);
-       boolean check=true;
- 
-//////////////tek for ile
+//      System.out.println(idList);
+        boolean check=true;
+        
        for (int i =0 ; i <idList.size()-1 ; i++) {
            System.out.println("i " +idList.get(i) +" j " + idList.get(i+1));
            if(idList.get(i)>idList.get(i+1)){//kucukten buyuge dogru siralanmiyorsa ilk false oldugunda donguyu kirar
@@ -91,7 +90,7 @@ public class US01_Get {
        Assert.assertFalse(check);
 
 
-       /////3.yol Set ile
+       /////2.yol Set ile
 
        List<Integer> idList2=new ArrayList<>(idList);
        Collections.sort(idList2); //dogal siralama yapar
