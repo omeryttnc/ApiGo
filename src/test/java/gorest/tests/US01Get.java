@@ -34,7 +34,7 @@ public class US01Get {
                 contentType(ContentType.JSON);
 
 
-        response.prettyPrint();
+        //response.prettyPrint();
         // response.prettyPeek();
         json = response.jsonPath();
 
@@ -98,30 +98,47 @@ public class US01Get {
     }
 
     @Test
-    public void GetTC11() {
+    public void GetTC10() {
 
-//        private <T> Set<T> findDuplicates(Collection<T> collection) {
-//            Set<T> uniques = new HashSet<>();
-//            return collection.stream()
-//                    .filter(e -> !uniques.add(e))
-//                    .collect(Collectors.toSet());
-//        }
+        List<String> dupliNames = json.getList("data.name");
 
-//        List<String> dupliNames = json.getList("data.name");
-//        Set<String> store = new HashSet<>();
-//        for (String name : dupliNames) {
-//            if (store.add(name) == false) {
-//                System.out.println("found a duplicate element in array : " + name);
-//            } else {
-//                System.out.println("No duplicate names");
+
+//        List<String> notDupliNames = new ArrayList<>();
+//        List<String> dupliNames = new ArrayList<>();
+
+//        for (String name : nameList) {
+//            if (!notDupliNames.contains(name)) {
+//                notDupliNames.add(name);
+//            } else if (nameList.contains(name)) {
+//                dupliNames.add(name);
+//                List<Integer> dupliId = json.getList("data.id");
+//                System.out.println(dupliNames);
 //            }
-//        }
 
-        int genderType = json.getInt("data.gender");
-        System.out.println(genderType);
-        //Assert.assertNotEquals(pageSize, 20);
+
+        Set<String> store = new HashSet<>();
+        for (String name : dupliNames) {
+            if (store.add(name) == false) {
+                System.out.println("found a duplicate element in array : " + name);
+            } else {
+                System.out.println("No duplicate names");
+            }
+        }
+
+
+        }
     }
-
+//    @Test
+//    public void Get11(){
+//        List<String> gender = json.getList("data.gender");
+//        int count=0;
+//        for(String gender : gender){
+//            if (user[i].gender == "Male")
+//                total+= 1;
+//        }
+//        System.out.println("Total: \nMale: " + (total) + "\nTotal Female: " + (count - total));
+//
+//     }
 
 
 }
