@@ -1,105 +1,127 @@
 package gorest.tests;
 
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-
-import static org.hamcrest.Matchers.*;
-
 import org.apache.http.HttpStatus;
+import org.hamcrest.Matchers;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
 
 public class US01Get {
 
     Response response;
     String endpoint = "https://gorest.co.in/public-api/users/";
-    //endpoint'in configuration properties ya da testbase de olmasi daha guzeldir
     JsonPath json;
 
-    @BeforeMethod  //TC_0101 status code assertion  ,//TC_0102 content-type assertion
-    public void TC01_02() {
-        //1.response ile endpointi sorguluyoruz
-        response = given().  //anahtar kelime-1
-                accept(ContentType.JSON). // accept("application/json). ---olarak a karsimiza cikabilir
-                ///get methodunda accept type kullaniriz
-                        when().//anahtar kelime-2
+    @BeforeMethod
+    public void setup() {
+        response = given().
+                accept(ContentType.JSON).
+                when().
                 get(endpoint);
-        //2.responseda assertion (gelen cevabi assert ediyoruz) yapiyoruz
         response.
-                then().//anahtar kelime-3
+                then().
                 assertThat().
-                statusCode(200). // statusCode(HttpStatus.SC_OK).--statusCode(HTTP/1.1 200 OK)--olarak da karsimiza cikabilir
-                contentType(ContentType.JSON);  ///burasi her turlu method icin(get-post-put..) content type olarak yazilir
+                statusCode(200).
+                contentType(ContentType.JSON);
 
-        // System.out.println(response.statusCode());  //sadece status codu yazdirmak icin
-        //  response.prettyPrint();  //sadece body i gosterir
-        // response.prettyPeek();   //hem body hem headeri gosterir
-        json = response.jsonPath();  //json,gelen body icinde rahatca islem yapmamizi saglar
+
+        response.prettyPrint();
+        // response.prettyPeek();
+        json = response.jsonPath();
 
     }
 
+    //TC_0101 status code assertion  ,//TC_0102 content-type assertion
     @Test
-    public void deneme() {
-        int code = json.getInt("code");
-        System.out.println(code);
-        int total = json.getInt("meta.pagination.total");
-        System.out.println(total);
-        Assert.assertNotEquals(total, "2000");
-
-        //List kullanimi : birden fazla value icin
-        List<Integer> idList = json.getList("data.id");
-        System.out.println(idList);  //index kullanilarak istenilen id'ye ulasilabilir
-
-        //List Map Kullanimi : birden fazla key value barindiran datalar icin
-        List<Map<String, Object>> data = json.getList("data");
-        System.out.println(data.get(1).get("gender")); //index ve key ismi kullniarak istenilen dataya ulasilabilir
-
-
-        //****Asssertion Farki
-
-        //TestNG ile assertion
-        Assert.assertEquals(data.get(1).get("gender"), "male");
-
-        //response classindan gelen assertThat ile assertion
-
-        response.then().assertThat().body("meta.pagination.limit", equalTo(20),
-                "meta.pagination.page", equalTo(1),
-                "data.id", hasItem(2662), "data.id", hasItems(2662, 2654));
-        //kullanimi yaygin degildir
-        // hard assertion'dir.
-        // Biri yanlis olsa bile code durur hata raporu verir
-        // Karisikliga yol acar,okuma zorlugu olusturur,
-        //Dinamik degildir
+    public void TC01_02() {
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.getContentType(), "application/json; charset=utf-8");
     }
 
-    //TC103 toplam kaç adet data var
+    //all data count assertion
     @Test
     public void TC03() {
-        int total = json.getInt("meta.pagination.total");//totale ulasmak icin 3 adim var//parent child iliskisi
+        int total = json.getInt("meta.pagination.total");
         System.out.println(total);
-        Assert.assertNotEquals(total, 1375);
+
+        Assert.assertNotEquals(total, "2000");
+        //assertion2
+        // response.then().assertThat().body("meta.pagination.total", Matchers.equalTo(200));//not equals kullanamiyoruz
+
+        //Matchers classinin importunu "import static org.hamcrest.Matchers.*;"
+        // olarak duzenlersek her seferinde Matchers kullanmayabiliriz
+
     }
-    //TC104 kaç page.den oluşuyor
+
+    //all page assertion
     @Test
     public void TC04() {
         int pageSize = json.getInt("meta.pagination.pages");
         System.out.println(pageSize);
         Assert.assertNotEquals(pageSize, 20);
+
+        //response.then().assertThat().body("meta.pagination.pages",equalTo(20));//not equals kullanamiyoruz
     }
 
-    //TC105 id.ler doğal sıralama ile mi sıralanmış
+    //id natural order assertion
     @Test
-    public void  TC05(){
-    List<Integer> idList = json.getList("data.id");
-        System.out.println(idList);
+    public void TC05() {
 
+        List<Integer> idList = json.getList("data.id");
+//      System.out.println(idList);
+        boolean check = true;
+
+        for (int i = 0; i < idList.size() - 1; i++) {
+            System.out.println("i " + idList.get(i) + " j " + idList.get(i + 1));
+            if (idList.get(i) > idList.get(i + 1)) {//kucukten buyuge dogru siralanmiyorsa ilk false oldugunda donguyu kirar
+                check = false;
+                break;
+            }
+        }
+        Assert.assertFalse(check);
+
+
+        /////2.yol Set ile
+
+        List<Integer> idList2 = new ArrayList<>(idList);
+        Collections.sort(idList2); //dogal siralama yapar
+        Assert.assertNotEquals(idList, idList2);
     }
+
+    @Test
+    public void GetTC11() {
+
+//        private <T> Set<T> findDuplicates(Collection<T> collection) {
+//            Set<T> uniques = new HashSet<>();
+//            return collection.stream()
+//                    .filter(e -> !uniques.add(e))
+//                    .collect(Collectors.toSet());
+//        }
+
+//        List<String> dupliNames = json.getList("data.name");
+//        Set<String> store = new HashSet<>();
+//        for (String name : dupliNames) {
+//            if (store.add(name) == false) {
+//                System.out.println("found a duplicate element in array : " + name);
+//            } else {
+//                System.out.println("No duplicate names");
+//            }
+//        }
+
+        int genderType = json.getInt("data.gender");
+        System.out.println(genderType);
+        //Assert.assertNotEquals(pageSize, 20);
+    }
+
+
 
 }
