@@ -77,26 +77,24 @@ public class US01_Get {
     public void TC05() {
 
         List<Integer> idList=json.getList("data.id");
-      System.out.println(idList);
-       boolean check=true;
+//      System.out.println(idList);
+        boolean check=true;
+        
+       for (int i =0 ; i <idList.size()-1 ; i++) {
+           System.out.println("i " +idList.get(i) +" j " + idList.get(i+1));
+           if(idList.get(i)>idList.get(i+1)){//kucukten buyuge dogru siralanmiyorsa ilk false oldugunda donguyu kirar
+               check=false;
+               break;
+           }
+       }
+       Assert.assertFalse(check);
 
 
-//////////////tek for ile
-        for (int i =0 ; i <idList.size()-1 ; i++) {
-            System.out.println("i " +idList.get(i) +" j " + idList.get(i+1));
-            if(idList.get(i)>idList.get(i+1)){//kucukten buyuge dogru siralanmiyorsa ilk false oldugunda donguyu kirar
-                check=false;
-                break;
-            }
-        }
-        Assert.assertFalse(check);
+       /////2.yol Set ile
 
-
-        /////3.yol Set ile
-
-        List<Integer> idList2=new ArrayList<>(idList);
-        Collections.sort(idList2); //dogal siralama yapar
-        Assert.assertNotEquals(idList,idList2);
+       List<Integer> idList2=new ArrayList<>(idList);
+       Collections.sort(idList2); //dogal siralama yapar
+       Assert.assertNotEquals(idList,idList2);
 
     }
 
