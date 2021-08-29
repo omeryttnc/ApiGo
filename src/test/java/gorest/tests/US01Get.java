@@ -1,5 +1,7 @@
 package gorest.tests;
 
+import gorest.utilities.ConfigurationReader;
+import gorest.utilities.TestBase;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -14,42 +16,57 @@ import java.util.*;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
+import static org.testng.Assert.assertTrue;
 
-public class US01Get {
+public class US01Get extends TestBase {
 
     Response response;
-    String endpoint = "https://gorest.co.in/public-api/users/";
+    //String endPoint = "https://gorest.co.in/public-api/users/";
     JsonPath json;
+    int json_code;
+    int json_allPages;
+    List<Integer> json_idList;
+    List<String> json_name_List;
+    List<String> json_gender_List;
+    int json_totalPage;
+    //Burada obje olusturuyorsun List veya int objeleri
 
-    @BeforeMethod
+
+    @BeforeMethod //TC_0101 status code assertion
     public void setup() {
+
         response = given().
+                spec(spec01).
                 accept(ContentType.JSON).
                 when().
-                get(endpoint);
+                get();
         response.
                 then().
                 assertThat().
                 statusCode(200).
                 contentType(ContentType.JSON);
 
-
-        //response.prettyPrint();
+        response.prettyPrint();
         // response.prettyPeek();
         json = response.jsonPath();
+        json_code = json.getInt("code");
+        json_allPages = json.getInt("meta.pagination.pages");
+        json_idList = json.getList("data.id");
+        json_name_List = json.getList("data.name");
+        json_gender_List = json.getList("data.gender");
+        //yukardaki objelere değer atadık
+
 
     }
 
-    //TC_0101 status code assertion  ,//TC_0102 content-type assertion
-    @Test
-    public void TC01_02() {
+    @Test //TC_0102 content-type assertion
+    public void TC0102() {
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.getContentType(), "application/json; charset=utf-8");
     }
 
-    //all data count assertion
-    @Test
-    public void TC03() {
+    @Test //all data count assertion
+    public void TC103() {
         int total = json.getInt("meta.pagination.total");
         System.out.println(total);
 
@@ -62,9 +79,8 @@ public class US01Get {
 
     }
 
-    //all page assertion
-    @Test
-    public void TC04() {
+    @Test //all page assertion
+    public void TC104() {
         int pageSize = json.getInt("meta.pagination.pages");
         System.out.println(pageSize);
         Assert.assertNotEquals(pageSize, 20);
@@ -72,9 +88,8 @@ public class US01Get {
         //response.then().assertThat().body("meta.pagination.pages",equalTo(20));//not equals kullanamiyoruz
     }
 
-    //id natural order assertion
-    @Test
-    public void TC05() {
+    @Test //id natural order assertion
+    public void TC105() {
 
         List<Integer> idList = json.getList("data.id");
 //      System.out.println(idList);
@@ -98,47 +113,119 @@ public class US01Get {
     }
 
     @Test
-    public void GetTC10() {
-
-        List<String> dupliNames = json.getList("data.name");
-
-
-//        List<String> notDupliNames = new ArrayList<>();
-//        List<String> dupliNames = new ArrayList<>();
-
-//        for (String name : nameList) {
-//            if (!notDupliNames.contains(name)) {
-//                notDupliNames.add(name);
-//            } else if (nameList.contains(name)) {
-//                dupliNames.add(name);
-//                List<Integer> dupliId = json.getList("data.id");
-//                System.out.println(dupliNames);
-//            }
+    public void TC06() {
+//id unique assertion
 
 
-        Set<String> store = new HashSet<>();
-        for (String name : dupliNames) {
-            if (store.add(name) == false) {
-                System.out.println("found a duplicate element in array : " + name);
-            } else {
-                System.out.println("No duplicate names");
+        List<Integer> idCheck = json.getList("data.id");
+
+        for (int i = 0; i < idCheck.size(); i++) {
+            for (int j = i + 1; j < idCheck.size(); j++) {
+                Assert.assertNotEquals(idCheck.get(i), idCheck.get(j));
+                System.out.println(i + ": " + idCheck.get(i) + " " + idCheck.get(j));
+            }
+        }
+//ikinci yol
+        Set<Integer> idSet = new HashSet<>(idCheck);
+        Assert.assertEquals(idCheck.size(), idSet.size());
+        System.out.println(idSet.size());
+        System.out.println(idCheck.size());
+    }
+
+    @Test //NULL olan name var mı, varsa hangi page hangi id?
+    public void Tc0107() {
+
+        List<String> allNames = new ArrayList<>();  //once bos list olusturdum
+
+        System.out.println("Total Page: " + json_allPages);
+
+        for (int i = 1; i <= json_allPages; i++) {      //burada her sayfadaki 20 kisilik isimleri aldik.
+
+            given().queryParam("page", i).
+                    when().get();
+
+            for (int j = 0; j < json_name_List.size(); j++) {        // bu listi olusturdugumuz bos listin icine koyduk.
+                allNames.add(json_name_List.get(j));
+                assertTrue(allNames.get(j) != null);
             }
         }
 
+        System.out.println("allNames.size() : " + allNames.size());
+    }
+
+    @Test //number of males assertion
+    public void TC108() {
+        int count = 0;
+        for (int i = 0; i < json_allPages; i++) {
+            given().queryParam("page").when().get();
+            for (String gender : json_gender_List) {
+                if (gender.equals("male")) { //burda equals yerine contains desen famale i de sayar cunku "male" kelimesi female da da var
+                    count++;
+                }
+            }
+        }
+        System.out.println(count);
+    }
+
+    @Test //number of males assertion
+    public void TC109() {
+        int count = 0;
+        for (int i = 0; i < json_allPages; i++) {
+            given().queryParam("page").when().get();
+            for (String gender : json_gender_List) {
+                if (gender.equals("female")) {
+                    count++;
+                }
+            }
+        }
+        System.out.println(count);
+    }
+
+    @Test
+    public void GetTC110() {
+
+        List<String> notDupliNames = new ArrayList<>();
+        List<String> dupliNames = new ArrayList<>();
+
+        for (String name : json_name_List) {
+            if (!notDupliNames.contains(name)) {
+                notDupliNames.add(name);
+            } else if (json_name_List.contains(name)) {
+                dupliNames.add(name);
+
+                System.out.println(name);
+            }
+
+
+//        Set<String> store = new HashSet<>();
+//        for (String name : json_name_List) {
+//            if (store.add(name) == false) {
+//                System.out.println("found a duplicate element in array : " + json_name_List);
+//            } else {
+//                System.out.println("No duplicate names");
+//            }
 
         }
+
+
     }
-//    @Test
-//    public void Get11(){
-//        List<String> gender = json.getList("data.gender");
-//        int count=0;
-//        for(String gender : gender){
-//            if (user[i].gender == "Male")
-//                total+= 1;
-//        }
-//        System.out.println("Total: \nMale: " + (total) + "\nTotal Female: " + (count - total));
-//
-//     }
+
+    @Test
+    public void Get111() {
+        int count = 0;
+        for (int i = 0; i < json_allPages; i++) {
+            given().queryParam("page").when().get();
+            for (String gender : json_gender_List) {
+                if (gender.equals("female")) {
+                    count++;
+
+                }
+            }
+            System.out.println(count);
+        }
 
 
+    }
 }
+
+
