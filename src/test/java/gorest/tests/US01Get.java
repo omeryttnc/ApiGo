@@ -1,5 +1,6 @@
 package gorest.tests;
 
+import gorest.utilities.ConfigurationReader;
 import gorest.utilities.TestBase;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -42,7 +43,7 @@ public class US01Get extends TestBase {
                 statusCode(200).
                 contentType(ContentType.JSON);
 
-        response.prettyPrint();
+//        response.prettyPrint();
         // response.prettyPeek();
         json = response.jsonPath();
         json_code = json.getInt("code");
@@ -177,6 +178,14 @@ public class US01Get extends TestBase {
         System.out.println(count);
     }
 
+    public static void main(String[] args) {
+        String endPoint = "https://gorest.co.in/public-api/users?page=2";
+        Response response = given(). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
+                when().get(endPoint);
+        response.prettyPrint();
+//        System.out.println(i);
+    }
+
     @Test //give duplicate names with their ids
     public void GetTC110() {
 //        List<String> notDupliNames = new ArrayList<>();
@@ -213,14 +222,20 @@ public class US01Get extends TestBase {
 
         for (int i = 1; i <= json_allPages; i++) {      //burada her sayfadaki 20 er sayfa sayisini i ye atadik
 
-            given().queryParam("page", i). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
-                    when().get(endPoint);
-            System.out.println(i); //100
 
-            for (String  name :json_name_List) {        // bu listi olusturdugumuz bos listin icine koyduk.
-                allNames.add(json_name_List);
-                System.out.println(name);
-            }
+
+            String endPoint = "https://gorest.co.in/public-api/users?page="+i;
+            Response response = given(). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
+                    when().get(endPoint);
+            response.prettyPrint();
+//            given().queryParam("page", i). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
+//                    when().get(endPoint);
+//            System.out.println(i); //100
+
+//            for (String  name :json_name_List) {        // bu listi olusturdugumuz bos listin icine koyduk.
+//                allNames.add(json_name_List);
+//                System.out.println(name);
+//            }
         }
 
        System.out.println("All names : " + allNames);
