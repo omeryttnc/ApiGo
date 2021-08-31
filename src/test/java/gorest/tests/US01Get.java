@@ -49,7 +49,7 @@ public class US01Get extends TestBase {
         json_code = json.getInt("code");
         json_allPages = json.getInt("meta.pagination.pages");
         json_idList = json.getList("data.id");
-        json_name_List = json.getList("data.name");
+//       json_name_List = json.getList("data.name");
         json_gender_List = json.getList("data.gender");
         //yukardaki objelere değer atadık
         //RestAssured.baseURI = ConfigurationReader.get("goRest.uri");
@@ -178,13 +178,13 @@ public class US01Get extends TestBase {
         System.out.println(count);
     }
 
-    public static void main(String[] args) {
-        String endPoint = "https://gorest.co.in/public-api/users?page=2";
-        Response response = given(). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
-                when().get(endPoint);
-        response.prettyPrint();
-//        System.out.println(i);
-    }
+//    public static void main(String[] args) {
+//        String endPoint = "https://gorest.co.in/public-api/users?page=2";
+//        Response response = given(). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
+//                when().get(endPoint);
+//        response.prettyPrint();
+////        System.out.println(i);
+//    }
 
     @Test //give duplicate names with their ids
     public void GetTC110() {
@@ -216,30 +216,37 @@ public class US01Get extends TestBase {
 //
 //            }
 //        }
-        List<List<String>> allNames = new ArrayList<>();  //once bos list olusturdum
+
+        List<Map<String, Object>> users = new ArrayList<>(); //once bos liste olusturdum
 
         System.out.println("Total Page: " + json_allPages); // sayfanin basindaki all pagesdan aliyor
 
-        for (int i = 1; i <= 3; i++) {      //burada her sayfadaki 20 er sayfa sayisini i ye atadik
+        for (int i = 1; i <= json_allPages; i++) {      //burada her sayfadaki 20 er sayfa sayisini i ye atadik
 
-            spec01.queryParam("page", 1);
+            spec01.queryParam("page", i); // i 1,2 ... artarak sayfalari cekiyor
 
-//            String endPoint = "https://gorest.co.in/public-api/users?page="+i;
             response = given(). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
                     spec(spec01).
-                    when().get("{page}");
-            response.prettyPrint();
-//            given().queryParam("page", i). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
-//                    when().get(endPoint);
-//            System.out.println(i); //100
+                    when().get();
+            System.out.println("page::::::::: "+i); //104
 
-//            for (String  name :json_name_List) {        // bu listi olusturdugumuz bos listin icine koyduk.
-//                allNames.add(json_name_List);
-//                System.out.println(name);
-//            }
+            json = response.jsonPath();
+            json_name_List = json.getList("data.name");
+            json_idList = json.getList("data.id");
+            for (int j=0; j < json_name_List.size(); j++) {
+
+                Map<String, Object> user = new HashMap<>();        // bu ikinci Map ismin üzerine yazmaması için
+                user.put("name", json_name_List.get(j));           // bu listi olusturdugumuz bos "user" listin icine koyduk.
+                user.put("id", json_idList.get(j));
+
+                System.out.println("users = " + user);
+                users.add(user);
+            }
         }
 
-       System.out.println("All names : " + allNames);
+        System.out.println("users = " + users);
+
+
     }
 
     @Test
