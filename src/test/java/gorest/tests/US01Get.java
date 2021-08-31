@@ -220,13 +220,14 @@ public class US01Get extends TestBase {
 
         System.out.println("Total Page: " + json_allPages); // sayfanin basindaki all pagesdan aliyor
 
-        for (int i = 1; i <= json_allPages; i++) {      //burada her sayfadaki 20 er sayfa sayisini i ye atadik
+        for (int i = 1; i <= 3; i++) {      //burada her sayfadaki 20 er sayfa sayisini i ye atadik
 
+            spec01.queryParam("page", 1);
 
-
-            String endPoint = "https://gorest.co.in/public-api/users?page="+i;
-            Response response = given(). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
-                    when().get(endPoint);
+//            String endPoint = "https://gorest.co.in/public-api/users?page="+i;
+            response = given(). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
+                    spec(spec01).
+                    when().get("{page}");
             response.prettyPrint();
 //            given().queryParam("page", i). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
 //                    when().get(endPoint);
