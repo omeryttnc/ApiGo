@@ -1,5 +1,6 @@
 package gorest.tests;
 
+import gorest.utilities.ConfigurationReader;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -36,7 +37,9 @@ public class US01_Get {
 
         //  response.prettyPrint();
         // response.prettyPeek();
-        json = response.jsonPath();
+       // json = response.jsonPath();
+
+
 
     }
 
