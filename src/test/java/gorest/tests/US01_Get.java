@@ -20,6 +20,7 @@ public class US01_Get {
     Response response;
     String endpoint = "https://gorest.co.in/public-api/users/";
     JsonPath json;
+    int totalPage;
 
     @BeforeMethod
     public void setup() {
@@ -37,6 +38,7 @@ public class US01_Get {
         //  response.prettyPrint();
         // response.prettyPeek();
         json = response.jsonPath();
+
 
     }
 
@@ -114,83 +116,87 @@ public class US01_Get {
             }
 
         }
+//ikinci yol
+        Set<Integer> idSet=new HashSet<>(idCheck);
+        Assert.assertEquals(idCheck.size(),idSet.size());
+        System.out.println(idSet.size());
+        System.out.println(idCheck.size());
+    }
 
-//        Set<Integer> idSet=new HashSet<>(idCheck);
-//        Assert.assertEquals(idCheck.size(),idSet.size());
-//        System.out.println(idSet.size());
-//        System.out.println(idCheck.size());
+    @Test
+    public void TC01012() {
+        //NUMBER OF ACTIVE STATUS HOLDERS 421
+
+        totalPage=json.getInt("meta.pagination.pages");
+        //System.out.println(totalPage); //checked 90 pages
+
+
+        List<String> allActives=new ArrayList<>();
+
+        for (int i = 1; i <=totalPage; i++) {
+            response=given().queryParam("page",i).get(endpoint);
+            JsonPath json=response.jsonPath();
+            List <String> actives=json.getList("data.active");
+
+            allActives.addAll(actives);
+
+        }
+        System.out.println(allActives.size());
+    }
+
+    @Test
+    public void TC01013(){
+
+        //ASSERT that A CERTAIN ID NUMBER EXISTS /AND RETRIEVE THE NAME AND STATUS OF THAT ID
+        int expected=1685;
+
+        totalPage=json.getInt("meta.pagination.pages");
+        //System.out.println(totalPage); total number of pages is 74
+
+        List<Integer> allIDs=new ArrayList<>();
+        List<String> allNames=new ArrayList<>();
+        List<String> allEmails=new ArrayList<>();
+        List<String> allGenders=new ArrayList<>();
+        List<String> allStatus=new ArrayList<>();
+
+        for (int i = 1; i <=totalPage; i++) {
+            response = given().queryParam("page", i)
+                    .when().get(endpoint);
+            json = response.jsonPath();
+
+            List<Integer> IDs = json.getList("data.id");
+            List<String> names = json.getList("data.name");
+            List<String> emails = json.getList("data.email");
+            List<String> genders = json.getList("data.gender");
+            List<String> status = json.getList("data.status");
+            allIDs.addAll(IDs);
+            allNames.addAll(names);
+            allEmails.addAll(emails);
+            allGenders.addAll(genders);
+            allStatus.addAll(status);
+        }
+
+            for (int j = 0; j < allIDs.size(); j++) {
+                if(allIDs.get(j)==expected){
+                    System.out.println("ID= "+allIDs.get(j)+
+                            "; NAME= " + allNames.get(j)+
+                            "; EMAIL= " + allEmails.get(j)+
+                            "; GENDER= " + allGenders.get(j)+
+                            "; STATUS= " + allStatus.get(j));
+                    break;
+                }
+
+            }
+
+            Assert.assertTrue(allIDs.contains(expected));
+        System.out.println(allIDs);
+        System.out.println(allNames);
+        System.out.println(allEmails);
+        System.out.println(allGenders);
+        System.out.println(allStatus);
+
+    }
+
+
 }
-    @Test
-    public void TC07(){
 
-//  names are not NULL assertion
-
-        List<String> names=json.getList("data.name");
-        int pages=json.getInt("meta.pagination.page");
-        List<Integer> ids=json.getList("data.id");
-
-        //System.out.println(pages);
-
-        for (int i = 0, namesSize = names.size(); i < namesSize; i++) {
-            String name = names.get(i);
-            String s = "Sankey Makron";
-            // System.out.println(name);
-            // Assert.assertNotEquals(name, s);
-
-            if (name.equals(s)) {
-                System.out.println(name);
-                System.out.println("Page: "+ pages+ " id: " + ids.get(i));
-            }
-        }
-
-    }
-
-    @Test
-    public void TC08(){
-
-
-    }
-
-    @Test
-    public void TC0112() {
-
-//        statusu aktif olan kaç kişi var// 421
-
-        List<String> active = json.getList("data.status");
-        int count = 0;
-        String s = "active";
-        for (String value : active) {
-            if (Objects.equals(value, s)) {
-                count++;
-                System.out.println(value);
-            }
-        }
-        System.out.println(count);
-
-    }
-
-    @Test
-    public void TC0113(){
-        //4142 id.si var mı
-
-        List<Integer> id=json.getList("data.id");
-        int expected=4142;
-        boolean check=false;
-        for (Integer integer : id) {
-            if (integer == expected) {
-                check = true;
-
-                System.out.println(integer);
-                break;
-            }
-            Assert.assertTrue(check);
-        }
-
-
-
-    }
-
-
-
-
-}
