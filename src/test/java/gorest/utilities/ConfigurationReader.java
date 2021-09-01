@@ -27,9 +27,18 @@ public class ConfigurationReader {
         }
     }
 
+
     //Create a method to READ
     //This method will get the KEY and return the VALUE
     public static String getProperty(String key){
         return properties.getProperty(key);
     }
+
+    public String getBaseUrl() {
+        String baseUrl = properties.getProperty("base_Url");
+        if(baseUrl != null) return baseUrl;
+        else throw new RuntimeException("base_Url not specified in the Configuration.properties file.");
+    }
+
+
 }

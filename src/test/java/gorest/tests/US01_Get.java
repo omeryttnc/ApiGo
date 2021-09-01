@@ -22,23 +22,7 @@ public class US01_Get {
     JsonPath json;
 
     @BeforeMethod
-    public void setup() {
-        response = given().
-                accept(ContentType.JSON).
-                when().
-                get(endpoint);
-        response.
-                then().
-                assertThat().
-                statusCode(200).
-                contentType(ContentType.JSON);
-
-
-        //  response.prettyPrint();
-        // response.prettyPeek();
-        json = response.jsonPath();
-
-    }
+    public void setup(){}
 
     //TC_0101 status code assertion  ,//TC_0102 content-type assertion
     @Test
