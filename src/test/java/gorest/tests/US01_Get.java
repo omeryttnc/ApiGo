@@ -34,7 +34,6 @@ public class US01_Get {
                 statusCode(200).
                 contentType(ContentType.JSON);
 
-
         //  response.prettyPrint();
         // response.prettyPeek();
        // json = response.jsonPath();
