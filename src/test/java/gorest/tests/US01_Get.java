@@ -1,5 +1,6 @@
 package gorest.tests;
 
+import gorest.utilities.ConfigurationReader;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -22,7 +23,25 @@ public class US01_Get {
     JsonPath json;
 
     @BeforeMethod
-    public void setup(){}
+    public void setup() {
+        response = given().
+                accept(ContentType.JSON).
+                when().
+                get(endpoint);
+        response.
+                then().
+                assertThat().
+                statusCode(200).
+                contentType(ContentType.JSON);
+
+
+        //  response.prettyPrint();
+        // response.prettyPeek();
+       // json = response.jsonPath();
+
+
+
+    }
 
     //TC_0101 status code assertion  ,//TC_0102 content-type assertion
     @Test
