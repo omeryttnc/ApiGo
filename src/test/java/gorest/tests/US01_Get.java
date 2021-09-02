@@ -40,7 +40,6 @@ public class US01_Get {
        // json = response.jsonPath();
 
 
-
     }
 
     //TC_0101 status code assertion  ,//TC_0102 content-type assertion
