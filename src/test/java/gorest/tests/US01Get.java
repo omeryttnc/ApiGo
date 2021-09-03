@@ -1,6 +1,7 @@
 package gorest.tests;
 
 import gorest.utilities.ConfigurationReader;
+import gorest.utilities.ReusableMethods;
 import gorest.utilities.TestBase;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -32,16 +33,7 @@ public class US01Get extends TestBase {
     @BeforeMethod //TC_0101 status code assertion
     public void setup() {
 
-        response = given().
-                spec(spec01).
-                accept(ContentType.JSON).
-                when().
-                get();
-        response.
-                then().
-                assertThat().
-                statusCode(200).
-                contentType(ContentType.JSON);
+       ReusableMethods.getResponse(endPoint);
 
 //        response.prettyPrint();
         // response.prettyPeek();
@@ -137,6 +129,10 @@ public class US01Get extends TestBase {
             given().queryParam("page", i). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
                     when().get(endPoint);
             System.out.println(i); //100
+            JsonPath json=response.jsonPath();
+
+            List<String> names = json.getList("data.name");
+            System.out.println(names);
 
             for (int j = 0; j < json_name_List.size(); j++) {        // bu listi olusturdugumuz bos listin icine koyduk.
                 allNames.add(json_name_List.get(j));
