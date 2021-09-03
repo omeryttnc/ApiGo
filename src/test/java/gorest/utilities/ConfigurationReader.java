@@ -11,7 +11,6 @@ public class ConfigurationReader {
     String path = "configuration.properties";
 
 
-
     FileInputStream fileInputStream;
     {
         try {
@@ -31,5 +30,10 @@ public class ConfigurationReader {
     //This method will get the KEY and return the VALUE
     public static String getProperty(String key){
         return properties.getProperty(key);
+    }
+
+    public static void main(String[] args) {
+        String str = getProperty("goRest_uri");
+        System.out.println("str = " + str);
     }
 }
