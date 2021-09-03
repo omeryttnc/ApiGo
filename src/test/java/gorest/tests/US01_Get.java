@@ -1,25 +1,27 @@
 package gorest.tests;
 
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.apache.http.HttpStatus;
-import org.hamcrest.Matchers;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
+import static io.restassured.RestAssured.given;
 
 public class US01_Get {
 
     Response response;
     String endpoint = "https://gorest.co.in/public-api/users/";
     JsonPath json;
+    List<String> json_gender_List;
+    int totalPage;
+
+
 
     @BeforeMethod
     public void setup() {
@@ -37,6 +39,10 @@ public class US01_Get {
         //  response.prettyPrint();
         // response.prettyPeek();
         json = response.jsonPath();
+        json_gender_List = json.getList("data.gender");
+        totalPage = json.getInt("meta.pagination.pages");
+
+
 
     }
 
@@ -96,6 +102,36 @@ public class US01_Get {
        Collections.sort(idList2); //dogal siralama yapar
        Assert.assertNotEquals(idList,idList2);
 
+    }
+
+    @Test //number of males assertion
+    public void TC108() {
+        int count = 0;
+        for (int i = 0; i < totalPage; i++) {
+            given().queryParam("page,i").when().get(endpoint);
+            for (String gender : json_gender_List
+            ) {
+                if (gender.equals("male")) {
+                    count++;
+                }
+            }
+        }
+        System.out.println(count);
+    }
+
+    @Test //number of females assertion
+    public void TC109() {
+        int count = 0;
+        for (int i = 0; i < totalPage; i++) {
+            given().queryParam("page,i").when().get(endpoint);
+            for (String gender : json_gender_List
+            ) {
+                if (gender.equals("female")) {
+                    count++;
+                }
+            }
+        }
+        System.out.println(count);
     }
 
 
