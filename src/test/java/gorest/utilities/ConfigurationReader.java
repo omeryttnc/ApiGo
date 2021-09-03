@@ -34,9 +34,5 @@ public class ConfigurationReader {
     }
 
 
-    public String getBaseUrl() {
-        String baseUrl = properties.getProperty("base_Url");
-        if(baseUrl != null) return baseUrl;
-        else throw new RuntimeException("base_Url not specified in the Configuration.properties file.");
-    }
+
 }
