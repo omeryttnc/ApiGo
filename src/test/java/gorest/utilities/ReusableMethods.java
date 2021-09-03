@@ -22,5 +22,15 @@ public class ReusableMethods {
         return response;
     }
 
+    public static Response getResponse(String url) {
+        Response response = given().
+                accept(ContentType.JSON).
+                when().
+                get(url);
+        // response.prettyPrint();
+
+        return response;
+    }
+
 
 }
