@@ -12,10 +12,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static io.restassured.RestAssured.given;
 
@@ -127,6 +124,8 @@ public void setup() {
         Assert.assertEquals(allCreatedDates.size(),allUpdateDates.size());  // --all date uptadated
        // Assert.assertEquals(allUpdateDates.size(),"1696");  //guncel sayi surekli degisiyor.
     }
+
+
 }
 
 
