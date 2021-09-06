@@ -1,7 +1,6 @@
 package gorest.tests;
 
 import gorest.utilities.ConfigurationReader;
-import gorest.utilities.ReusableMethods;
 import gorest.utilities.TestBase;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -33,7 +32,16 @@ public class US01Get extends TestBase {
     @BeforeMethod //TC_0101 status code assertion
     public void setup() {
 
-       ReusableMethods.getResponse(endPoint);
+        response = given().
+                spec(spec01).
+                accept(ContentType.JSON).
+                when().
+                get();
+        response.
+                then().
+                assertThat().
+                statusCode(200).
+                contentType(ContentType.JSON);
 
 //        response.prettyPrint();
         // response.prettyPeek();
@@ -41,7 +49,7 @@ public class US01Get extends TestBase {
         json_code = json.getInt("code");
         json_allPages = json.getInt("meta.pagination.pages");
         json_idList = json.getList("data.id");
-//       json_name_List = json.getList("data.name");
+        json_name_List = json.getList("data.name");
         json_gender_List = json.getList("data.gender");
         //yukardaki objelere değer atadık
         //RestAssured.baseURI = ConfigurationReader.get("goRest.uri");
@@ -49,13 +57,13 @@ public class US01Get extends TestBase {
     }
 
     @Test //TC_0102 content-type assertion
-    public void TC0102() {
+    public void tc102() {
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.getContentType(), "application/json; charset=utf-8");
     }
 
     @Test //all data count assertion
-    public void TC103() {
+    public void tc103() {
         int total = json.getInt("meta.pagination.total");
         System.out.println(total);
 
@@ -69,7 +77,7 @@ public class US01Get extends TestBase {
     }
 
     @Test //all page assertion
-    public void TC104() {
+    public void tc104() {
         int pageSize = json.getInt("meta.pagination.pages");
         System.out.println(pageSize);
         Assert.assertNotEquals(pageSize, 20);
@@ -78,7 +86,7 @@ public class US01Get extends TestBase {
     }
 
     @Test //id natural order assertion
-    public void TC105() {
+    public void tc105() {
 
         List<Integer> idList = json.getList("data.id");
 //      System.out.println(idList);
@@ -102,7 +110,7 @@ public class US01Get extends TestBase {
     }
 
     @Test //id unique assertion
-    public void TC06() {
+    public void tc106() {
 
 //        for (int i = 0; i < json_idList.size(); i++) {
 //            for (int j = i + 1; j < json_idList.size(); j++) {
@@ -118,7 +126,7 @@ public class US01Get extends TestBase {
     }
 
     @Test //NULL (isimsiz) olan name var mı, varsa hangi page hangi id?
-    public void Tc0107() {
+    public void tc107() {
 
         List<String> allNames = new ArrayList<>();  //once bos list olusturdum
 
@@ -129,10 +137,6 @@ public class US01Get extends TestBase {
             given().queryParam("page", i). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
                     when().get(endPoint);
             System.out.println(i); //100
-            JsonPath json=response.jsonPath();
-
-            List<String> names = json.getList("data.name");
-            System.out.println(names);
 
             for (int j = 0; j < json_name_List.size(); j++) {        // bu listi olusturdugumuz bos listin icine koyduk.
                 allNames.add(json_name_List.get(j));
@@ -145,7 +149,7 @@ public class US01Get extends TestBase {
     }
 
     @Test //number of males assertion
-    public void TC108() {
+    public void tc108() {
         int count = 0;
         for (int i = 0; i < json_allPages; i++) {
             given().queryParam("page", i). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
@@ -160,7 +164,7 @@ public class US01Get extends TestBase {
     }
 
     @Test //number of males assertion
-    public void TC109() {
+    public void tc109() {
         int count = 0;
         for (int i = 0; i < json_allPages; i++) {
             given().queryParam("page", i). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
@@ -183,7 +187,7 @@ public class US01Get extends TestBase {
 //    }
 
     @Test //give duplicate names with their ids
-    public void GetTC110() {
+    public void getTc110() {
 //        List<String> notDupliNames = new ArrayList<>();
 //        List<String> dupliNames = new ArrayList<>();
 //
@@ -195,58 +199,55 @@ public class US01Get extends TestBase {
 //
 //                System.out.println(name);
 //            }
-
-
-//        Set<String> store01 = new HashSet<>(json_name_List);
-//        //Set<Integer> store02 = new HashSet<>(json_allIds);
-//        int count = 0;
-//        for (int i = 0; i < json_allPages; i++) {
-//            given().queryParam("page").when().get(endPoint);
-//            for (String name : json_name_List) {
-//                if (store01.add(name) == false) {
-//                    System.out.println("found a duplicate element in array : " + json_name_List);
 //
-//                } else {
-//                    System.out.println("No duplicate names");
-//                }
 //
-//            }
-//        }
 
-        List<Map<String, Object>> users = new ArrayList<>(); //once bos liste olusturdum
+        Set<String> store = new HashSet<>();
 
-        System.out.println("Total Page: " + json_allPages); // sayfanin basindaki all pagesdan aliyor
+            for (String name : json_name_List) {
+                if (store.add(name) == false) {
+                    System.out.println("found a duplicate element in array : " + name);
 
-        for (int i = 1; i <= json_allPages; i++) {      //burada her sayfadaki 20 er sayfa sayisini i ye atadik
+                } else {
+                    System.out.println("No duplicate names");
+                }
 
-            spec01.queryParam("page", i); // i 1,2 ... artarak sayfalari cekiyor
-
-            response = given(). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
-                    spec(spec01).
-                    when().get();
-            System.out.println("page::::::::: "+i); //104
-
-            json = response.jsonPath();
-            json_name_List = json.getList("data.name");
-            json_idList = json.getList("data.id");
-            for (int j=0; j < json_name_List.size(); j++) {
-
-                Map<String, Object> user = new HashMap<>();        // bu ikinci Map ismin üzerine yazmaması için
-                user.put("name", json_name_List.get(j));           // bu listi olusturdugumuz bos "user" listin icine koyduk.
-                user.put("id", json_idList.get(j));
-
-                System.out.println("users = " + user);
-                users.add(user);
             }
         }
 
-        System.out.println("users = " + users);
+//        List<Map<String, Object>> users = new ArrayList<>(); //once bos liste olusturdum
+//
+//        System.out.println("Total Page: " + json_allPages); // sayfanin basindaki all pagesdan aliyor
+
+//        for (int i = 1; i <= json_allPages; i++) {      //burada her sayfadaki 20 er sayfa sayisini i ye atadik
+//
+//            spec01.queryParam("page", i); // i 1,2 ... artarak sayfalari cekiyor
+//
+//            response = given(). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
+//                    spec(spec01).
+//                    when().get();
+//            System.out.println("page::::::::: "+i); //104
+//
+//            json = response.jsonPath();
+//            json_name_List = json.getList("data.name");
+//            json_idList = json.getList("data.id");
+//            for (int j=0; j < json_name_List.size(); j++) {
+//
+//                Map<String, Object> user = new HashMap<>();        // bu ikinci Map ismin üzerine yazmaması için
+//                user.put("name", json_name_List.get(j));           // bu listi olusturdugumuz bos "user" listin icine koyduk.
+//                user.put("id", json_idList.get(j));
+//
+//                System.out.println("users = " + user);
+//                users.add(user);
+//            }
+//        }
+
+        //System.out.println("users = " + users);
 
 
-    }
-
+//    }
     @Test
-    public void Get111() {
+    public void get111() {
 
         int countFemale = 0;
         int countMale = 0;
