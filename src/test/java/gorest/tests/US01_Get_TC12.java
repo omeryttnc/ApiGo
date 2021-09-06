@@ -3,6 +3,7 @@ package gorest.tests;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class US01_Get_TC12 {
     @Test
     public void TC01_012() {
         //NUMBER OF ACTIVE STATUS HOLDERS 421
+        int expected=421;
         response= given().accept(ContentType.JSON)
                 .when().get(endpoint);
 
@@ -41,5 +43,7 @@ public class US01_Get_TC12 {
 
         }
         System.out.println(allActives.size());
+        //Since the output changes,assertion generally fails.
+        //Assert.assertEquals(expected, allActives.size());
     }
 }
