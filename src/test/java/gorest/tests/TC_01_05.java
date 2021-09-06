@@ -13,7 +13,7 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
-public class US01_Get {
+public class TC_01_05 {
 
     Response response;
     String endpoint = "https://gorest.co.in/public-api/users/";
@@ -21,8 +21,6 @@ public class US01_Get {
     JsonPath json;  //de-serialization
     List<String> json_gender_List;
     int totalPage;
-
-
 
 
     @BeforeMethod
@@ -34,7 +32,6 @@ public class US01_Get {
         response.
                 then().
                 assertThat().
-                statusCode(200).
                 contentType(ContentType.JSON);
 
         //  response.prettyPrint();
@@ -44,14 +41,13 @@ public class US01_Get {
         totalPage = json.getInt("meta.pagination.pages");
 
 
-
     }
 
     //TC_0101 status code assertion  ,//TC_0102 content-type assertion
     @Test
     public void TC01_02() {
-        Assert.assertEquals(response.getStatusCode(),200);
-        Assert.assertEquals(response.getContentType(),"application/json; charset=utf-8");
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.getContentType(), "application/json; charset=utf-8");
     }
 
     //all data count assertion
@@ -61,9 +57,9 @@ public class US01_Get {
         System.out.println(total);
 
         Assert.assertNotEquals(total, "2000");
+
         //assertion2
         // response.then().assertThat().body("meta.pagination.total", Matchers.equalTo(200));//not equals kullanamiyoruz
-
         //Matchers classinin importunu "import static org.hamcrest.Matchers.*;"
         // olarak duzenlersek her seferinde Matchers kullanmayabiliriz
 
@@ -83,63 +79,37 @@ public class US01_Get {
     @Test
     public void TC05() {
 
-        List<Integer> idList=json.getList("data.id");
-//      System.out.println(idList);
-        boolean check=true;
-        
-       for (int i =0 ; i <idList.size()-1 ; i++) {
-           System.out.println("i " +idList.get(i) +" j " + idList.get(i+1));
-           if(idList.get(i)>idList.get(i+1)){//kucukten buyuge dogru siralanmiyorsa ilk false oldugunda donguyu kirar
-               check=false;
-               break;
-           }
-       }
-       Assert.assertFalse(check);
+        int totalPage = response.path("meta.pagination.pages");
+
+        for (int i = 1; i <= totalPage; i++) {
+
+            response = given().queryParam("page", i)
+                    .when().get(endpoint);
+
+            JsonPath json = response.jsonPath();
+
+            List<Integer> idList = json.getList("data.id");
 
 
-       /////2.yol Set ile
+            boolean check = true;
 
-       List<Integer> idList2=new ArrayList<>(idList);
-       Collections.sort(idList2); //dogal siralama yapar
-       Assert.assertNotEquals(idList,idList2);
-
-    }
-
-    @Test //number of males assertion
-    public void TC108() {
-        int count = 0;
-        for (int i = 0; i < totalPage; i++) {
-            given().queryParam("page,i").when().get(endpoint);
-            for (String gender : json_gender_List
-            ) {
-                if (gender.equals("male")) {
-                    count++;
+            for (int j = 0; j < idList.size() - 1; j++) {
+                System.out.println("i " + idList.get(j) + " j " + idList.get(j + 1));
+                if (idList.get(j) < idList.get(j + 1)) {//kucukten buyuge dogru siralanmiyorsa ilk false oldugunda donguyu kirar
+                    check = false;
+                    break;
                 }
             }
+            Assert.assertFalse(check);
+
         }
-        System.out.println(count);
+
+        /////2.yol Set ile
+//        List<Integer> idList = json.getList("data.id");//orijinal data
+//        System.out.println(idList);
+//        List<Integer> idList2 = new ArrayList<>(idList);
+//        Collections.sort(idList2); //natural order olduktan sonra
+//        Assert.assertNotEquals(idList, idList2);
+
     }
-
-    @Test //number of females assertion
-    public void TC109() {
-        int count = 0;
-        for (int i = 0; i < totalPage; i++) {
-            given().queryParam("page,i").when().get(endpoint);
-            for (String gender : json_gender_List
-            ) {
-                if (gender.equals("female")) {
-                    count++;
-                }
-            }
-        }
-        System.out.println(count);
-    }
-
-
-
-
-
-
-
-
 }
