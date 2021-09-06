@@ -19,7 +19,7 @@ public class US01_Get {
 
     Response response;
     String endpoint = "https://gorest.co.in/public-api/users/";
-    JsonPath json;
+    JsonPath json;  //de-serialization
 
     @BeforeMethod
     public void setup() {
