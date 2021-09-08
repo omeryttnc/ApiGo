@@ -3,12 +3,10 @@ package gorest.tests;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gorest.pojos.ApiGo;
-import gorest.pojos.Datum;
+import gorest.pojos.Data;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -82,7 +80,7 @@ public class TC_01_05_Pojo {
             apiGoPojo = objectMapper.readValue(response.asString(), ApiGo.class);
 
 
-            for (Datum w : apiGoPojo.getData()){
+            for (Data w : apiGoPojo.getData()){
                 allId.add(w.getId());
                 System.out.println(w.getId());
             }
