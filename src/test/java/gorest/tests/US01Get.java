@@ -48,58 +48,6 @@ public class US01Get extends TestBase {
 
     }
 
-    @Test //TC_0102 content-type assertion
-    public void TC0102() {
-        Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertEquals(response.getContentType(), "application/json; charset=utf-8");
-    }
-
-    @Test //all data count assertion
-    public void TC103() {
-        int total = json.getInt("meta.pagination.total");
-        System.out.println(total);
-
-        Assert.assertNotEquals(total, "2000");
-        //assertion2
-        // response.then().assertThat().body("meta.pagination.total", Matchers.equalTo(200));//not equals kullanamiyoruz
-
-        //Matchers classinin importunu "import static org.hamcrest.Matchers.*;"
-        // olarak duzenlersek her seferinde Matchers kullanmayabiliriz
-
-    }
-
-    @Test //all page assertion
-    public void TC104() {
-        int pageSize = json.getInt("meta.pagination.pages");
-        System.out.println(pageSize);
-        Assert.assertNotEquals(pageSize, 20);
-
-        //response.then().assertThat().body("meta.pagination.pages",equalTo(20));//not equals kullanamiyoruz
-    }
-
-    @Test //id natural order assertion
-    public void TC105() {
-
-        List<Integer> idList = json.getList("data.id");
-//      System.out.println(idList);
-        boolean check = true;
-
-        for (int i = 0; i < idList.size() - 1; i++) {
-            System.out.println("i " + idList.get(i) + " j " + idList.get(i + 1));
-            if (idList.get(i) > idList.get(i + 1)) {//kucukten buyuge dogru siralanmiyorsa ilk false oldugunda donguyu kirar
-                check = false;
-                break;
-            }
-        }
-        Assert.assertFalse(check);
-
-
-        /////2.yol Set ile
-
-        List<Integer> idList2 = new ArrayList<>(idList);
-        Collections.sort(idList2); //dogal siralama yapar
-        Assert.assertNotEquals(idList, idList2);
-    }
 
     @Test //id unique assertion
     public void TC06() {
