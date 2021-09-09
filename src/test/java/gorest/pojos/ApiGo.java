@@ -20,7 +20,7 @@ public class ApiGo {
     @JsonProperty("meta")
     private Meta meta;
     @JsonProperty("data")
-    private List<Datum> data = null;
+    private List<Data> data = null;
 
     /**
      * No args constructor for use in serialization
@@ -33,7 +33,7 @@ public class ApiGo {
      * @param data
      * @param meta
      */
-    public ApiGo(Integer code, Meta meta, List<Datum> data) {
+    public ApiGo(Integer code, Meta meta, List<Data> data) {
         super();
         this.code = code;
         this.meta = meta;
@@ -61,12 +61,12 @@ public class ApiGo {
     }
 
     @JsonProperty("data")
-    public List<Datum> getData() {
+    public List<Data> getData() {
         return data;
     }
 
     @JsonProperty("data")
-    public void setData(List<Datum> data) {
+    public void setData(List<Data> data) {
         this.data = data;
     }
 

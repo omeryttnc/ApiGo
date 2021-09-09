@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "status"
 })
 
-public class Datum {
+public class Data {
 
     @JsonProperty("id")
     private Integer id;
@@ -29,7 +29,7 @@ public class Datum {
     /**
      * No args constructor for use in serialization
      */
-    public Datum() {
+    public Data() {
     }
 
     /**
@@ -39,7 +39,7 @@ public class Datum {
      * @param email
      * @param status
      */
-    public Datum(Integer id, String name, String email, String gender, String status) {
+    public Data(Integer id, String name, String email, String gender, String status) {
         super();
         this.id = id;
         this.name = name;
@@ -101,7 +101,7 @@ public class Datum {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(Datum.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(Data.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("id");
         sb.append('=');
         sb.append(((this.id == null) ? "<null>" : this.id));
