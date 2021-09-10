@@ -13,7 +13,7 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
-public class TC_01_05 {
+public class TC_Get_01_05 {
 
     Response response;
     String endpoint = "https://gorest.co.in/public-api/users/";
