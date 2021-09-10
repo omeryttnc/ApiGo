@@ -1,8 +1,6 @@
-package gorest.pojos2;
+package gorest.pojos_lombok;
 
 import lombok.*;
-
-import java.util.List;
 
 @Getter
 @Setter
