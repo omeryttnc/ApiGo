@@ -1,6 +1,5 @@
 package gorest.tests;
 
-import gorest.utilities.ConfigurationReader;
 import gorest.utilities.TestBase;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -188,25 +187,50 @@ public class US01Get extends TestBase {
 
     @Test //give duplicate names with their ids
     public void getTc110() {
-//        List<String> notDupliNames = new ArrayList<>();
-//        List<String> dupliNames = new ArrayList<>();
+
+//        Set<String> store = new HashSet<>();
 //
-//        for (String name : json_name_List) {
-//            if (!notDupliNames.equals(name)) {
-//                notDupliNames.add(name);
-//            } else if (json_name_List.equals(name)) {
-//                dupliNames.add(name);
+//            for (String name : json_name_List) {
+//                if (store.add(name) == false) {
+//                    System.out.println("found a duplicate element in array : " + name);
 //
-//                System.out.println(name);
+//                } else {
+//                    System.out.println("No duplicate names");
+//                }
+//
 //            }
-//
-//
+//        }
 
-        Set<String> store = new HashSet<>();
+        List<Map<String, Object>> users = new ArrayList<>(); //once bos liste olusturdum
 
-            for (String name : json_name_List) {
+        System.out.println("Total Page: " + json_allPages); // sayfanin basindaki all pagesdan aliyor
+
+        for (int i = 1; i <= json_allPages; i++) {      //burada her sayfadaki 20 er sayfa sayisini i ye atadik
+
+            spec01.queryParam("page", i); // i 1,2 ... artarak sayfalari cekiyor
+
+            response = given(). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
+                    spec(spec01).
+                    when().get();
+            System.out.println("page::::::::: "+i); //104
+
+            json = response.jsonPath();
+            json_name_List = json.getList("data.name");
+            json_idList = json.getList("data.id");
+            for (int j=0; j < json_name_List.size(); j++) {
+
+                Map<String, Object> user = new HashMap<>();        // bu ikinci Map ismin üzerine yazmaması için
+                user.put("name", json_name_List.get(j));           // bu listi olusturdugumuz bos "user" listin icine koyduk.
+                user.put("id", json_idList.get(j));
+
+                //System.out.println("users = " + user);
+                users.add(user);
+            }
+            Set<Map<String, Object>> store = new HashSet<>();
+
+            for (Map<String, Object> name : users) {
                 if (store.add(name) == false) {
-                    System.out.println("found a duplicate element in array : " + name);
+                    System.out.println("found a duplicate element in array : " + users);
 
                 } else {
                     System.out.println("No duplicate names");
@@ -214,38 +238,10 @@ public class US01Get extends TestBase {
 
             }
         }
-
-//        List<Map<String, Object>> users = new ArrayList<>(); //once bos liste olusturdum
-//
-//        System.out.println("Total Page: " + json_allPages); // sayfanin basindaki all pagesdan aliyor
-
-//        for (int i = 1; i <= json_allPages; i++) {      //burada her sayfadaki 20 er sayfa sayisini i ye atadik
-//
-//            spec01.queryParam("page", i); // i 1,2 ... artarak sayfalari cekiyor
-//
-//            response = given(). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
-//                    spec(spec01).
-//                    when().get();
-//            System.out.println("page::::::::: "+i); //104
-//
-//            json = response.jsonPath();
-//            json_name_List = json.getList("data.name");
-//            json_idList = json.getList("data.id");
-//            for (int j=0; j < json_name_List.size(); j++) {
-//
-//                Map<String, Object> user = new HashMap<>();        // bu ikinci Map ismin üzerine yazmaması için
-//                user.put("name", json_name_List.get(j));           // bu listi olusturdugumuz bos "user" listin icine koyduk.
-//                user.put("id", json_idList.get(j));
-//
-//                System.out.println("users = " + user);
-//                users.add(user);
-//            }
-//        }
-
         //System.out.println("users = " + users);
 
 
-//    }
+    }
     @Test
     public void get111() {
 
