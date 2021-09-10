@@ -253,8 +253,8 @@ public class TC_Get_10_11 extends TestBase {
         System.out.println("female:" + countFemale);
         System.out.println("male:" +countMale);
         Assert.assertEquals(countFemale, countMale);
-        Assert.assertTrue(countFemale<countMale);
-        Assert.assertTrue(countFemale>countMale);
+//        Assert.assertTrue(countFemale>countMale);
+
 
     }
 
