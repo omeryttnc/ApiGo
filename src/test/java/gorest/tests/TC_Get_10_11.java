@@ -13,7 +13,7 @@ import java.util.*;
 import static io.restassured.RestAssured.*;
 import static org.testng.Assert.assertTrue;
 
-public class US01Get extends TestBase {
+public class TC_Get_10_11 extends TestBase {
 
     Response response;
     String endPoint = "https://gorest.co.in/public-api/users/";
@@ -188,18 +188,6 @@ public class US01Get extends TestBase {
     @Test //give duplicate names with their ids
     public void getTc110() {
 
-//        Set<String> store = new HashSet<>();
-//
-//            for (String name : json_name_List) {
-//                if (store.add(name) == false) {
-//                    System.out.println("found a duplicate element in array : " + name);
-//
-//                } else {
-//                    System.out.println("No duplicate names");
-//                }
-//
-//            }
-//        }
 
         List<Map<String, Object>> users = new ArrayList<>(); //once bos liste olusturdum
 
@@ -242,12 +230,14 @@ public class US01Get extends TestBase {
 
 
     }
-    @Test
+    @Test //more females assertion (female sayısı daha mı fazla)
     public void get111() {
 
         int countFemale = 0;
         int countMale = 0;
         for (int i = 0; i < json_allPages; i++) {
+            given().queryParam("page", i). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
+                    when().get(endPoint);
             for (String genderF : json_gender_List) {
                 if (genderF.equals("female")) {
                     countFemale++;
@@ -262,8 +252,10 @@ public class US01Get extends TestBase {
         }
         System.out.println("female:" + countFemale);
         System.out.println("male:" +countMale);
-        //Assert.assertTrue(countFemale>countMale);
         Assert.assertEquals(countFemale, countMale);
+        Assert.assertTrue(countFemale<countMale);
+        Assert.assertTrue(countFemale>countMale);
+
     }
 
 }
