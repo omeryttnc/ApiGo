@@ -45,27 +45,30 @@ public class TC_Get_Pojo_08_09 {
         json = response.jsonPath();
         // json_gender_List = json.getList("data.gender");
         // totalPage = json.getInt("meta.pagination.pages");
-        // response.prettyPrint();
+         //response.prettyPrint();
         apiGoPojo = objectMapper.readValue(response.asString(), ApiGo.class);
 
     }
 
 
     @Test //number of males and females assertion
-    public void TC108_TC109() {
+    public void TC108_TC109() throws JsonProcessingException {
 
         int totalPage_Pojo = apiGoPojo.getMeta().getPagination().getPages();
-        for (int i = 0; i <= totalPage_Pojo; i++) {
+        System.out.println(totalPage_Pojo);
+        for (int i = 1; i <= totalPage_Pojo; i++) {
             response = given().queryParam("page", i)
                     .when().get(endpoint);
+           json = response.jsonPath();
+            apiGoPojo = objectMapper.readValue(response.asString(), ApiGo.class);
             for (int j = 0; j < apiGoPojo.getData().size(); j++) {
                 if (apiGoPojo.getData().get(j).getGender().equals("male")) {
-                    gender_List_Male.add(apiGoPojo.getData().get(j).getGender());
+                    gender_List_Male.add(apiGoPojo.getData().get(j).getName());
                 } else if (apiGoPojo.getData().get(j).getGender().equals("female")) {
-                    gender_List_Female.add(apiGoPojo.getData().get(j).getGender());
+                    gender_List_Female.add(apiGoPojo.getData().get(j).getName());
                 }
             }
-            System.out.println(i+1 + ".page male : " + gender_List_Male.size() + " and female is : " + gender_List_Female.size());
+            System.out.println(i + ".page male : " + gender_List_Male.size() + " and female is : " + gender_List_Female.size());
         }
         System.out.println("final male : " + gender_List_Male.size() + " and female is : " + gender_List_Female.size());
 
