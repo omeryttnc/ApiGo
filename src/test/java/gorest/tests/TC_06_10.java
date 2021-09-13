@@ -159,7 +159,6 @@ public class TC_06_10  {
 
         System.out.println(dublicateSet.size());
         Assert.assertEquals(nameList.size(), dublicateSet.size());
-
     }
 
     //more females assertion//female sayisi daha mo fazla
