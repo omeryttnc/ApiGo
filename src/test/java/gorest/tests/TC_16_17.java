@@ -9,8 +9,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -36,9 +34,6 @@ public class TC_16_17 {
     //search for email("aliveli@gmail.com")assertion
     @Test
     public void TC16() {
-
-        List<String> email = new ArrayList<>();
-        List<String>jsonEmail = json.getList("data.email");
         int totalPage = response.path("meta.pagination.pages");
         int controlCode = 0;
 
@@ -49,8 +44,7 @@ public class TC_16_17 {
             json = response.jsonPath();
 
             List<String> emailList = json.getList("data.email");
-            //System.out.println(emailList);
-            email.addAll(jsonEmail);
+            System.out.println(emailList);
             String searchEmail = "aliveli@gmail.com";
 
             for (int j = 0; j < emailList.size(); j++) {
@@ -60,8 +54,6 @@ public class TC_16_17 {
                 }
             }
         }
-       Collections.sort(email);
-        System.out.println(email);
         Assert.assertEquals(controlCode, 0);
     }
 

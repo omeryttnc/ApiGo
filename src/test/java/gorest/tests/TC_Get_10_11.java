@@ -42,7 +42,7 @@ public class TC_Get_10_11 extends TestBase {
                 statusCode(200).
                 contentType(ContentType.JSON);
 
-        // response.prettyPrint();
+//        response.prettyPrint();
         // response.prettyPeek();
         json = response.jsonPath();
         json_code = json.getInt("code");
@@ -58,30 +58,36 @@ public class TC_Get_10_11 extends TestBase {
     @Test //give duplicate names with their ids
     public void getTc110() {
 
+
         List<Map<String, Object>> users = new ArrayList<>(); //once bos liste olusturdum
+
         System.out.println("Total Page: " + json_allPages); // sayfanin basindaki all pagesdan aliyor
 
         for (int i = 1; i <= json_allPages; i++) {      //burada her sayfadaki 20 er sayfa sayisini i ye atadik
+
             spec01.queryParam("page", i); // i 1,2 ... artarak sayfalari cekiyor
+
             response = given(). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
                     spec(spec01).
                     when().get();
-            System.out.println("page::::::::: " + i); //104
+            System.out.println("page::::::::: "+i); //104
 
             json = response.jsonPath();
             json_name_List = json.getList("data.name");
             json_idList = json.getList("data.id");
-            for (int j = 0; j < json_name_List.size(); j++) {
+            for (int j=0; j < json_name_List.size(); j++) {
+
                 Map<String, Object> user = new HashMap<>();        // bu ikinci Map ismin üzerine yazmaması için
-               // user.put("name", json_name_List.get(j));
                 user.put("name", json_name_List.get(j));           // bu listi olusturdugumuz bos "user" listin icine koyduk.
                 user.put("id", json_idList.get(j));
-                users.add(user);
 
+                //System.out.println("users = " + user);
+                users.add(user);
+            }
             Set<Map<String, Object>> store = new HashSet<>();
 
             for (Map<String, Object> name : users) {
-                if (!store.add(name)) {
+                if (store.add(name) == false) {
                     System.out.println("found a duplicate element in array : " + users);
 
                 } else {
@@ -89,73 +95,11 @@ public class TC_Get_10_11 extends TestBase {
                 }
 
             }
-            }
-
-//            System.out.println("users = " + users);
         }
+        //System.out.println("users = " + users);
+
 
     }
-    @Test
-    public void femaleWrite() {
-        List<String> genderList = new ArrayList<>();
-        for (String value : json_gender_List) {
-            if (!genderList.contains(value)) {
-                genderList.add(value);
-            }
-        }
-        System.out.println(genderList);
-        for (int i = 1; i <= json_allPages; i++) {      //burada her sayfadaki 20 er sayfa sayisini i ye atadik
-            spec01.queryParam("page", i); // i 1,2 ... artarak sayfalari cekiyor
-            response = given(). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
-                    spec(spec01).
-                    when().get();
-            System.out.println("page::::::::: " + i);
-
-            for (String s : genderList) {
-                for (int j = 0; j < json_gender_List.size(); j++) {
-                    if (json_gender_List.get(j).equals(s)) {
-                        System.out.println("gender is : " + s + " id : " + json_idList.get(j) + " name : " + json_name_List.get(j));
-                    }
-                }
-            }
-        }
-    }
-
-    @Test
-    public void testName() {
-        List<String> allNames = new ArrayList<>();
-        List<Integer> allId = new ArrayList<>();
-
-
-        for (int i = 1; i <= 3; i++) {      //burada her sayfadaki 20 er sayfa sayisini i ye atadik
-            spec01.queryParam("page", i); // i 1,2 ... artarak sayfalari cekiyor
-            response = given(). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
-                    spec(spec01).
-                    when().get();
-            System.out.println("page::::::::: " + i);
-
-            json = response.jsonPath();
-            json_name_List = json.getList("data.name");
-            json_idList = json.getList("data.id");
-
-            allNames.addAll(json_name_List);
-            allId.addAll(json_idList);
-
-//            for (int j = 0; j < json_name_List.size(); j++) {
-//                allNames.add(json_name_List.get(j));
-//                allId.add(json_idList.get(j));
-//            }
-
-        }
-                Collections.sort(allNames);
-                //System.out.println(allNames);
-                for (int j = 0; j < allNames.size() - 1; j++) {
-                    if (allNames.get(j).equals(allNames.get(j + 1))) {
-                        System.out.println(" first name : " + allNames.get(j) + " id : " + allId.get(j) + " second name : " + allNames.get(j + 1) + " id : " + allId.get(j+1));
-                    }
-                }
-        }
-
     @Test //more females assertion (female sayısı daha mı fazla)
     public void get111() {
 
