@@ -77,10 +77,11 @@ public class TC_Get_Pojo_10 extends TestBase {
 
     @Test
     public void tcGet110b() throws JsonProcessingException {
-//        int allPages = apiGoPojo.getMeta().getPagination().getPages();
-//        List<String> allNames = new ArrayList<>();
-//        List<Integer> allId = new ArrayList<>();
-//        List<Integer> allPage = new ArrayList<>();
+
+        int count =  0;
+        Set<String> duplication = new HashSet<>();
+        List<String> allNames = new ArrayList<>();
+
         Map<Integer, String> Map_Id_Name = new HashMap<>();
 
         for (int i = 1; i <= 3; i++) {      //burada her sayfadaki 20 er sayfa sayisini i ye atadik
@@ -93,7 +94,6 @@ public class TC_Get_Pojo_10 extends TestBase {
             for (Data w : apiGoPojo.getData()) {
                 Map_Id_Name.put(w.getId(), w.getName());
             }
-
         }
         Map<Integer, String> Map_sorted = Map_Id_Name.entrySet()
                 .stream()
@@ -107,16 +107,25 @@ public class TC_Get_Pojo_10 extends TestBase {
 
         for (int i = 0; i < Map_sorted.size() - 1; i++) {
 
-            System.out.println("name : " + Map_sorted.get(idList.get(i)) + " id : " + idList.get(i));
+            //System.out.println("name : " + Map_sorted.get(idList.get(i)) + " id : " + idList.get(i));
             if (Map_sorted.get(idList.get(i)).equals(Map_sorted.get(idList.get(i + 1)))) {
+                allNames.add(Map_sorted.get(idList.get(i)));
                 System.out.println(
 
-                        "name : " + Map_sorted.get(idList.get(i)) +
+                                "name : " + Map_sorted.get(idList.get(i)) +
                                 " id : " + idList.get(i) +
                                 " name : " + Map_sorted.get(idList.get(i + 1)) +
                                 " id : " + idList.get(i + 1)
                 );
+                count++;
+                duplication.add(Map_sorted.get(idList.get(i)));
             }
         }
+        System.out.println("Duplication number: " + count);
+        System.out.println(duplication);
+        System.out.println(allNames);
+
+
     }
+
 }
