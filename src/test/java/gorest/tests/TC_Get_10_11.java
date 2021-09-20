@@ -101,31 +101,6 @@ public class TC_Get_10_11 extends TestBase {
         }
 
     }
-    @Test
-    public void femaleWrite() {
-        List<String> genderList = new ArrayList<>();
-        for (String value : json_gender_List) {
-            if (!genderList.contains(value)) {
-                genderList.add(value);
-            }
-        }
-        System.out.println(genderList);
-        for (int i = 1; i <= json_allPages; i++) {      //burada her sayfadaki 20 er sayfa sayisini i ye atadik
-            spec01.queryParam("page", i); // i 1,2 ... artarak sayfalari cekiyor
-            response = given(). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
-                    spec(spec01).
-                    when().get();
-            System.out.println("page::::::::: " + i);
-
-            for (String s : genderList) {
-                for (int j = 0; j < json_gender_List.size(); j++) {
-                    if (json_gender_List.get(j).equals(s)) {
-                        System.out.println("gender is : " + s + " id : " + json_idList.get(j) + " name : " + json_name_List.get(j));
-                    }
-                }
-            }
-        }
-    }
 
     @Test
     public void testName() {
