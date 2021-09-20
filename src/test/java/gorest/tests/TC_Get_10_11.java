@@ -169,25 +169,28 @@ public class TC_Get_10_11 extends TestBase {
 
         int countFemale = 0;
         int countMale = 0;
-        for (int i = 0; i < json_allPages; i++) {
-            given().queryParam("page", i). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
+        int countNotr = 0;
+        for (int i = 1; i <= json_allPages; i++) {
+            response=given().queryParam("page", i). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
                     when().get(endPoint);
-            for (String genderF : json_gender_List) {
-                if (genderF.equals("female")) {
-                    countFemale++;
-                }
-            }
-            for (String genderM : json_gender_List) {
-                if (genderM.equals("male")) {
-                        countMale++;
-                }
-            }
 
-        }
+            json = response.jsonPath();
+            json_gender_List = json.getList("data.gender");
+            for (String gender : json_gender_List) {
+                if (gender.equals("female")) {
+                    countFemale++;
+                } else if (gender.equals("male")) {
+                    countMale++;
+                } else {
+                    countNotr++;
+                }
+            }
+         }
         System.out.println("female:" + countFemale);
         System.out.println("male:" +countMale);
-        Assert.assertEquals(countFemale, countMale);
-//        Assert.assertTrue(countFemale>countMale);
+        System.out.println("Notr:" +countNotr);
+//        Assert.assertEquals(countFemale, countMale);
+        Assert.assertFalse(countFemale>countMale && countFemale<countNotr);
 
 
     }
