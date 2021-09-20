@@ -1,5 +1,9 @@
 package gorest.tests;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import gorest.pojos.ApiGo;
+import gorest.pojos.Data;
 import gorest.utilities.TestBase;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -9,6 +13,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.*;
 import static org.testng.Assert.assertTrue;
@@ -24,6 +29,7 @@ public class TC_Get_10_11 extends TestBase {
     List<Integer> json_idList;
     List<String> json_name_List;
     List<String> json_gender_List;
+
 
     //Burada obje olusturuyorsun List veya int objeleri
 
@@ -148,13 +154,15 @@ public class TC_Get_10_11 extends TestBase {
 
         }
                 Collections.sort(allNames);
-                //System.out.println(allNames);
+//                System.out.println(allNames);
                 for (int j = 0; j < allNames.size() - 1; j++) {
                     if (allNames.get(j).equals(allNames.get(j + 1))) {
                         System.out.println(" first name : " + allNames.get(j) + " id : " + allId.get(j) + " second name : " + allNames.get(j + 1) + " id : " + allId.get(j+1));
                     }
                 }
         }
+
+
 
     @Test //more females assertion (female sayısı daha mı fazla)
     public void get111() {
