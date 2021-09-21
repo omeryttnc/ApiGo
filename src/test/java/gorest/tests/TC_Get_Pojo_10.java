@@ -39,6 +39,8 @@ public class TC_Get_Pojo_10 extends TestBase {
     }
 
     @Test
+    //1. yol
+    // Burada dublication olanlari id leriyle listeliyor (Collection sort alfabetik siraya sokup bir sonrakiyle karsilastirarak buluyor)
     public void tcGet110a() throws JsonProcessingException {
         int allPages = apiGoPojo.getMeta().getPagination().getPages();
         List<String> allNames = new ArrayList<>();
@@ -76,11 +78,11 @@ public class TC_Get_Pojo_10 extends TestBase {
 
 
     @Test
+    // Burda ekstra olarak tekrarlayan isimleri yazdirmasini ekledik
     public void tcGet110b() throws JsonProcessingException {
 
-        int count =  0;
         Set<String> duplication = new HashSet<>();
-        List<String> allNames = new ArrayList<>();
+        List<String> allDuplications = new ArrayList<>();
 
         Map<Integer, String> Map_Id_Name = new HashMap<>();
 
@@ -109,7 +111,7 @@ public class TC_Get_Pojo_10 extends TestBase {
 
             //System.out.println("name : " + Map_sorted.get(idList.get(i)) + " id : " + idList.get(i));
             if (Map_sorted.get(idList.get(i)).equals(Map_sorted.get(idList.get(i + 1)))) {
-                allNames.add(Map_sorted.get(idList.get(i)));
+                allDuplications.add(Map_sorted.get(idList.get(i)));
                 System.out.println(
 
                                 "name : " + Map_sorted.get(idList.get(i)) +
@@ -117,13 +119,13 @@ public class TC_Get_Pojo_10 extends TestBase {
                                 " name : " + Map_sorted.get(idList.get(i + 1)) +
                                 " id : " + idList.get(i + 1)
                 );
-                count++;
+
                 duplication.add(Map_sorted.get(idList.get(i)));
             }
         }
-        System.out.println("Duplication number: " + count);
+
         System.out.println(duplication);
-        System.out.println(allNames);
+        System.out.println(allDuplications);
 
 
     }
