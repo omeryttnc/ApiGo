@@ -1,9 +1,5 @@
 package gorest.tests;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import gorest.pojos.ApiGo;
-import gorest.pojos.Data;
 import gorest.utilities.TestBase;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -11,12 +7,10 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.*;
-import static org.testng.Assert.assertTrue;
+
 
 public class TC_Get_10_11 extends TestBase {
 
@@ -57,7 +51,7 @@ public class TC_Get_10_11 extends TestBase {
         json_name_List = json.getList("data.name");
         json_gender_List = json.getList("data.gender");
         //yukardaki objelere değer atadık
-        //RestAssured.baseURI = ConfigurationReader.get("goRest.uri");
+
 
     }
 
@@ -73,17 +67,14 @@ public class TC_Get_10_11 extends TestBase {
             response = given(). //given yeniden request yaptik, i kac tane page var saydi ve toplam page i verecek
                     spec(spec01).
                     when().get();
-            //System.out.println("page::::::::: " + i);
+
 
             json = response.jsonPath();
             json_name_List = json.getList("data.name");
             json_idList = json.getList("data.id");
 
-//            allNames.addAll(json_name_List);
-
             System.out.println("page::::::::: " + i);
             allNames.addAll(json_name_List);
-
 
         }
                 Collections.sort(allNames);

@@ -4,15 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gorest.pojos.ApiGo;
 import gorest.pojos.Data;
-import gorest.utilities.ConfigurationReader;
 import gorest.utilities.ReusableMethods;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.lang.module.Configuration;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
