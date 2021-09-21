@@ -1,6 +1,9 @@
 package gorest.utilities;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import gorest.pojos.ApiGo;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -8,29 +11,32 @@ import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 
 public class ReusableMethods {
-    Response response;
-    String endPoint = "https://gorest.co.in/public-api/users/";
-    JsonPath json;
+    public static JsonPath json;
+    public static Response response;
+    public static ObjectMapper objectMapper = new ObjectMapper();
+    public static ApiGo apiGo;
+
 
     public static Response getresponse(String url) {
-        Response response = given().
+        response = given().
                 accept(ContentType.JSON).
                 when().
                 get(url);
         // response.prettyPrint();
-
+        json=response.jsonPath();
         return response;
     }
 
-    public static Response getResponse(String url) {
-        Response response = given().
+
+    public static Response getResponsePojo(String url) throws JsonProcessingException {
+        response = given().
                 accept(ContentType.JSON).
                 when().
                 get(url);
         // response.prettyPrint();
-
+        apiGo = objectMapper.readValue(response.asString(), ApiGo.class);
         return response;
-    }
 
 
+}
 }
