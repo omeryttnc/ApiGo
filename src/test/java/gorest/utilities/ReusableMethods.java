@@ -23,7 +23,7 @@ public class ReusableMethods {
                 when().
                 get(url);
         // response.prettyPrint();
-        json=response.jsonPath();
+        json = response.jsonPath();
         return response;
     }
 
@@ -36,7 +36,7 @@ public class ReusableMethods {
         // response.prettyPrint();
         apiGo = objectMapper.readValue(response.asString(), ApiGo.class);
         return response;
+    }
 
 
-}
 }

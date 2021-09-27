@@ -1,4 +1,4 @@
-package gorest.tests;
+package gorest.tests.get;
 
 import gorest.utilities.ConfigurationReader;
 import gorest.utilities.ReusableMethods;

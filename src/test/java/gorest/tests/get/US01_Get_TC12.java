@@ -1,4 +1,4 @@
-package gorest.tests;
+package gorest.tests.get;
 
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
