@@ -29,6 +29,7 @@ public class TC_16_17 {
           json = response.jsonPath();
 
 
+
     }
 
     //search for email("aliveli@gmail.com")assertion

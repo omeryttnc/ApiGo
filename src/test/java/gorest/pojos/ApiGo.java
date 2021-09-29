@@ -39,9 +39,7 @@ public class ApiGo {
         this.meta = meta;
         this.data = data;
     }
-///////********post icin
-    public ApiGo(String name, String email, String gender, String status) {
-    }
+
 
     @JsonProperty("code")
     public Integer getCode() {

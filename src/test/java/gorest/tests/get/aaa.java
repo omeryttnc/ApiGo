@@ -1,4 +1,4 @@
-package gorest.tests.post;
+package gorest.tests.get;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;

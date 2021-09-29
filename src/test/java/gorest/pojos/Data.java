@@ -47,6 +47,13 @@ public class Data {
         this.gender = gender;
         this.status = status;
     }
+    public Data(String name, String email, String gender, String status) {
+        super();
+        this.name = name;
+        this.email = email;
+        this.gender = gender;
+        this.status = status;
+    }
 
     @JsonProperty("id")
     public Integer getId() {
