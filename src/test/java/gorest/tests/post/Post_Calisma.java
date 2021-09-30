@@ -13,7 +13,7 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
-public class Deneme {
+public class Post_Calisma {
 
     Response response;
     String endpoint = "https://gorest.co.in/public-api/users/";
