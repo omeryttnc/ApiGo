@@ -1,14 +1,19 @@
 package gorest.tests.post;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import gorest.pojos.ApiGo;
+import gorest.pojos.Data;
+import gorest.utilities.ConfigurationReader;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
@@ -18,7 +23,6 @@ public class Post_Calisma {
     Response response;
     String endpoint = "https://gorest.co.in/public-api/users/";
     JsonPath json;
-    ApiGo apiGo;
     ObjectMapper objectMapper=new ObjectMapper();
     String token ="5d04fe08a73c74ff19ad6559ca5c4933457919bd915272fc0b55c0c8933f0783";
     Faker faker=new Faker();
@@ -87,18 +91,43 @@ public class Post_Calisma {
         json=response.jsonPath();
         response.prettyPrint();
 
-//        $gender = $faker->randomElement(['male', 'female']);
+
+    }
+
+    //pojo ile
+    @Test
+    public void TC04() throws JsonProcessingException {
+        ApiGo data=new ApiGo("Anna","Annazkaranina@gmail.com","male","inactive");
+
+        response=given().contentType(ContentType.JSON).
+                auth().oauth2(token).
+                body(data).
+                when().
+                post(endpoint);
+        response.prettyPrint();
+
+        //2.yol
+//        response = given().headers(
+//                "Authorization",
+//                "Bearer " + ConfigurationReader.getProperty("token"),
+//                "Content-Type",
+//                ContentType.JSON,
+//                "Accept",
+//                ContentType.JSON).
+//                body(data).
+//                when().post(endpoint);
+
+
+        ApiGo apigo=objectMapper.readValue(response.asString(),ApiGo.class);
+
+        List<Data> list=apigo.getData();
+        System.out.println(list);
+//        for(Data w: list){
+//            if(w.getEmail().equals("alireet@gmail.com"))
+//            System.out.println("esit");
 //
-//        return [
-//        'name' => $faker->name($gender),
-//                'email' => $faker->safeEmail,
-//                'username' => $faker->userName,
-//                'phone' => $faker->phoneNumber,
-//                'gender' => $gender,
-//                'address' => $faker->address,
-//                'dob' => $faker->date($format = 'Y-m-d', $max = 'now'),
-//                'password' => bcrypt('secret')
-//];
+//
+//        }
     }
 
 }

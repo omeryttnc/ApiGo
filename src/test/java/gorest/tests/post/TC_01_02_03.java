@@ -11,6 +11,7 @@ import gorest.utilities.ReusableMethods;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -24,8 +25,6 @@ public class TC_01_02_03 {
     Response response;
     String endPoint="https://gorest.co.in/public-api/users/";
     JsonPath json;
-    ObjectMapper objectMapper=new ObjectMapper();
-    ApiGo apigo;
     Map<String,Object> postMap = new HashMap<>();
     Faker faker=new Faker();
     String token="5d04fe08a73c74ff19ad6559ca5c4933457919bd915272fc0b55c0c8933f0783";
@@ -42,10 +41,11 @@ public class TC_01_02_03 {
     //yeni bir data oluşturun
     @Test
     public void TC01() {
-        postMap.put("name",faker.name().firstName());
+        postMap.put("name",faker.name().fullName());
         postMap.put("email",faker.internet().emailAddress());
         postMap.put("gender","female");
         postMap.put("status","active");
+
         response =  given().
                 contentType(ContentType.JSON).
                 auth().oauth2(token).
@@ -63,7 +63,7 @@ public class TC_01_02_03 {
     //yeni bir data oluşturun/name eksik
     @Test
     public void TC02() throws JsonProcessingException {
-        Data data=new Data("aaali","eliss@gl","female","active");
+        Data data=new Data(faker.internet().emailAddress(),"male","active");
 
         response = given().
                 contentType(ContentType.JSON).
@@ -72,24 +72,28 @@ public class TC_01_02_03 {
                 when().
                 post(endPoint);
         response.prettyPrint();
-       // ApiGo apigo=objectMapper.readValue(response.asString(),ApiGo.class);
+        json= response.jsonPath();
 
-        response.prettyPrint();
+        String message=json.getString("data.message");
+        System.out.println(message);
+        Assert.assertEquals(message,"[can't be blank]");
+
     }
 
     //yeni bir data oluşturun/email eksik
     @Test
     public void TC03() {
-        postMap.put("name", "aaaba");
+        postMap.put("name", "aaabza");
         postMap.put("gender", "male");
         postMap.put("status", "active");
+
         postMethod(postMap);
 
         response.prettyPrint();
         json= response.jsonPath();
-       // String name=json.getString("data.name");
-        String message=json.getString("message");
-        System.out.println(message);
+        String message=json.getString("data.message");
+        String field=json.getString("data.field");
+        System.out.println(field +" bolumu mesaji : " +message);
 
     }
 

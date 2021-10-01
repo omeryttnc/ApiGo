@@ -5,6 +5,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -21,6 +23,11 @@ public class ApiGo {
     private Meta meta;
     @JsonProperty("data")
     private List<Data> data = null;
+    private String name;
+    private String email;
+    private String gender;
+    private String status;
+
 
     /**
      * No args constructor for use in serialization
@@ -38,6 +45,30 @@ public class ApiGo {
         this.code = code;
         this.meta = meta;
         this.data = data;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public ApiGo(String name, String email, String gender, String status) {
+        super();
+        this.name = name;
+        this.email = email;
+        this.gender = gender;
+        this.status = status;
     }
 
 
