@@ -1,4 +1,4 @@
-package gorest.tests;
+package gorest.tests.get;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

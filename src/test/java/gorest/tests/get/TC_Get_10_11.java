@@ -1,4 +1,4 @@
-package gorest.tests;
+package gorest.tests.get;
 
 import gorest.utilities.TestBase;
 import io.restassured.http.ContentType;
