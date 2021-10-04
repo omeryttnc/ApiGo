@@ -1,7 +1,8 @@
-package gorest.tests;
+package gorest.tests.post;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
+import gorest.utilities.ReusableMethods;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -28,38 +29,38 @@ public class TC_Post_0204_0205 {
         /*
         can't be blank"" message assertion"
          */
-        Random random = new Random();
-        String[] status = {"active", "inactive"};
-        int number = random.nextInt(2);
+//        Random random = new Random();
+//        String[] status = {"active", "inactive"};
+//        int number = random.nextInt(2);
         Map<String, Object> mapBody = new HashMap<>();
         mapBody.put("name", faker.name().fullName());
         mapBody.put("email", faker.internet().emailAddress());
-        mapBody.put("status", status[number]);
+        mapBody.put("status", ReusableMethods.RandomStatus());
         response = given().
                 contentType(ContentType.JSON).
                 auth().oauth2(token).
                 body(mapBody).
                 when().
                 post(endpoint);
-        //response.prettyPrint();
+       // response.prettyPrint();
         json = response.jsonPath();
         String message = json.getString("data.message");
-        //System.out.println(message);
+       // System.out.println(message);
         Assert.assertEquals(message, "[can't be blank]");//koseli parantezi koymasam hata veriyordu
 
     }
 
     @Test
     public void TC_Post_0205() {
-        Random random = new Random();
-        String[] status = {"active", "inactive"};
-        String[] gender = {"male", "female"};
-        int number = random.nextInt(2);
+       // Random random = new Random();
+//        String[] status = {"active", "inactive"};
+//        String[] gender = {"male", "female"};
+//        int number = random.nextInt(2);
         Map<String, Object> mapBody = new HashMap<>();
         mapBody.put("name", faker.name().firstName());
         mapBody.put("email", faker.internet().emailAddress());
-        mapBody.put("gender", gender[number]);
-        mapBody.put("status", status[number]);
+        mapBody.put("gender", ReusableMethods.RandomGender());
+        mapBody.put("status", ReusableMethods.RandomStatus());
 
         response = given().contentType(ContentType.JSON).
                 auth().oauth2(token).
@@ -67,13 +68,14 @@ public class TC_Post_0204_0205 {
                 when().
                 post(endpoint);
         json = response.jsonPath();
-//        response.prettyPrint();
-//        System.out.println(mapBody.get("name"));
-//        System.out.println(json.getString("data.name"));
+        response.prettyPrint();
+        System.out.println(mapBody.get("name"));
+        System.out.println(json.getString("data.name"));
         Assert.assertEquals(json.getString("data.name"), mapBody.get("name"));
         Assert.assertEquals(json.getString("data.email"), mapBody.get("email"));
         Assert.assertEquals(json.getString("data.gender"), mapBody.get("gender"));
         Assert.assertEquals(json.getString("data.status"), mapBody.get("status"));
     }
+
 }
 
