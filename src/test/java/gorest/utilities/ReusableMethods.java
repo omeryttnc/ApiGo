@@ -8,6 +8,8 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
+import java.util.Random;
+
 import static io.restassured.RestAssured.given;
 
 public class ReusableMethods {
@@ -36,6 +38,18 @@ public class ReusableMethods {
         // response.prettyPrint();
         apiGo = objectMapper.readValue(response.asString(), ApiGo.class);
         return response;
+    }
+    public static String RandomStatus(){
+        Random random = new Random();
+        String[] status = {"active", "inactive"};
+        int number = random.nextInt(2);
+        return status[number];
+    }
+    public static String RandomGender(){
+        Random random = new Random();
+        String[] gender = {"male", "female"};
+        int number = random.nextInt(2);  //0 1
+        return gender[number];
     }
 
 
