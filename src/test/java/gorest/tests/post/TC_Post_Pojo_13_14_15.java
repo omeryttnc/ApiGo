@@ -27,7 +27,7 @@ public class TC_Post_Pojo_13_14_15 {
 
 
     @Test
-    public void TC13() throws JsonProcessingException { //new data creation with (name,email,gender,status) with wrong type of status
+    public void TC13() { //new data creation with (name,email,gender,status) with wrong type of status
 
        Data data = new Data(faker.name().fullName(),faker.internet().emailAddress(), ReusableMethods.RandomGender(),"??");
 
