@@ -7,10 +7,8 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import static io.restassured.RestAssured.given;
 
 public class TC_Post_13_14_15 {
@@ -29,14 +27,16 @@ public class TC_Post_13_14_15 {
         mapBody.put("email", faker.internet().emailAddress());
         mapBody.put("gender", ReusableMethods.RandomGender());
         mapBody.put("status","Aktif");
+
         response = given().
                 contentType(ContentType.JSON).
                 auth().oauth2(token).
                 body(mapBody).
                 when().
                 post(endPoint);
-        // response.prettyPrint();
+         response.prettyPrint();
         json = response.jsonPath();
+
         String message = json.getString("data.message");
         String field=json.getString("data.field");
         System.out.println(field +" bolumu mesaji : " +message);
@@ -53,20 +53,23 @@ public class TC_Post_13_14_15 {
     @Test  //new data creation with (NULL name,email,gender,status)
     public void TC_Post_14() {
 
-        mapBody.put("name", "");
+        mapBody.put("name", null);
         mapBody.put("email", faker.internet().emailAddress());
         mapBody.put("gender", ReusableMethods.RandomGender());
         mapBody.put("status",ReusableMethods.RandomStatus());
+
         response = given().
                 contentType(ContentType.JSON).
                 auth().oauth2(token).
                 body(mapBody).
                 when().
                 post(endPoint);
-        // response.prettyPrint();
+         response.prettyPrint();
         json = response.jsonPath();
+
         String message = json.getString("data.message");
         String field=json.getString("data.field");
+
         System.out.println(field +" bolumu mesaji : " +message);
 
        Assert.assertEquals(message, "[can't be blank]");
@@ -77,20 +80,22 @@ public class TC_Post_13_14_15 {
     public void TC_Post_15() {
 
         mapBody.put("name", faker.name().fullName());
-        mapBody.put("email"," ");
+        mapBody.put("email","");
         mapBody.put("gender", ReusableMethods.RandomGender());
         mapBody.put("status",ReusableMethods.RandomStatus());
+
         response = given().
                 contentType(ContentType.JSON).
                 auth().oauth2(token).
                 body(mapBody).
                 when().
                 post(endPoint);
-        // response.prettyPrint();
+         response.prettyPrint();
         json = response.jsonPath();
 
         String message = json.getString("data.message");
         String field=json.getString("data.field");
+
         System.out.println(field +" bolumu mesaji : " +message);
 
         Assert.assertEquals(message, "[can't be blank]");
