@@ -30,6 +30,7 @@ public class TC_Post_Pojo_10_11_12 {
     Map<String,Object> postMap= new HashMap<>();
     Faker faker=new Faker();
     Data_asObject data_asObject;
+    Data data;
     ObjectMapper objectMapper=new ObjectMapper();
     ApiGo apiGo;
     List<Object> nameList=new ArrayList<>();
@@ -37,29 +38,31 @@ public class TC_Post_Pojo_10_11_12 {
     List<String> genderList=new ArrayList<>();
 
 
-    @Test
+    @Test // HENUZ UZERINDE CALISMAYA DEVAM EDIYORUM. JSON ILE INTEGER KABUL EDERKEN POJO ILE ETMEDI!!!
+            //APIGO CLASS ILE ILGILI DE SORUN CIKIYOR.
     public void TC_10() throws JsonProcessingException {
         // new data creation with (name,email,gender,status) wrong type of name
         // farkli turleri  kabul ettigini dogrula
 
-        nameList.add(600);
+        nameList.add("600");
         nameList.add(800);
-        nameList.add(51885);
-        nameList.add(123);
+        nameList.add(51.885);
+        nameList.add('K');
 
         for (int i = 0; i <4 ; i++) {
             Object name=nameList.get(i);
-            data_asObject=new Data_asObject(name, faker.internet().emailAddress(),"male","active");
+            data=new Data(name, faker.internet().emailAddress(),"male","active");
             response= given().
                     contentType(ContentType.JSON).
-                    body(postMap).
+                    body(data).
                     auth().oauth2(token).
                     when().post(endPoint);
            // json=response.jsonPath();
            // String code=json.getString("code");
-            apiGo=objectMapper.readValue(response.asString(),ApiGo.class);
-            int code= apiGo.getCode();
-            System.out.println(code + " code");
+            data=objectMapper.readValue(response.asString(),Data.class);
+            //apiGo=objectMapper.readValue(response.asString(),ApiGo.class);
+           // int code= apiGo.getCode();
+           // System.out.println(code + " code");
            // Assert.assertEquals(code,"201");
 
 

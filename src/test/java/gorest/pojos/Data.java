@@ -57,6 +57,13 @@ public class Data {
         this.gender = gender;
         this.status = status;
     }
+    public Data(Object name, String email, String gender, String status) {
+        super();
+        this.name = (String) name;
+        this.email = email;
+        this.gender = gender;
+        this.status = status;
+    }
     public Data(String email, String gender, String status) {
         super();
         this.email = email;
