@@ -8,6 +8,7 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
+import java.util.List;
 import java.util.Random;
 
 import static io.restassured.RestAssured.given;
@@ -51,6 +52,15 @@ public class ReusableMethods {
         int number = random.nextInt(2);  //0 1
         return gender[number];
     }
-
+    public static List<Integer> getId()  {
+        Response response;
+        JsonPath jsonPath;
+        response = given().
+                contentType(ContentType.JSON).
+                auth().oauth2(ConfigurationReader.getProperty("token")).
+                when().get(ConfigurationReader.getProperty("endPoint"));
+        jsonPath = response.jsonPath();
+        return jsonPath.getList("data.id");
+    }
 
 }
