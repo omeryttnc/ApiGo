@@ -10,10 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static io.restassured.RestAssured.given;
 
@@ -73,6 +70,9 @@ public class TC_06_10  {
         }
 
         System.out.println("allNames.size() : " + allNames.size());
+
+
+
 
     }
 
