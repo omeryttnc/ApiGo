@@ -1,4 +1,4 @@
-package gorest.tests;
+package gorest.tests.get;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import gorest.pojos.ApiGo;
 import io.restassured.http.ContentType;
@@ -27,6 +27,7 @@ public class TC_16_17 {
                 when().
                 get(endpoint);
           json = response.jsonPath();
+
 
 
     }

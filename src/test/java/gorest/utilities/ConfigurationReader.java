@@ -8,7 +8,7 @@ public class ConfigurationReader {
     private static Properties properties;
 
     //path of the configuration.properties file
-    String path = "configuration.properties";
+    String path = "C:/Users/pinar/IdeaProjects/ApiGo/configuration.properties";
 
 
     FileInputStream fileInputStream;
@@ -33,7 +33,33 @@ public class ConfigurationReader {
     }
 
     public static void main(String[] args) {
-        String str = getProperty("goRest_uri");
+        String str = getProperty("token");
         System.out.println("str = " + str);
     }
 }
+
+
+/*
+
+ustteki calismazsa bu denenebilir
+public class ConfigurationReader {
+
+
+    static Properties properties;
+    static{
+        String path = "configuration.properties";
+        try{
+            FileInputStream file = new FileInputStream(path);
+            properties = new Properties();
+
+            properties.load(file);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public  static String getProperty(String key){
+        return properties.getProperty(key);
+    }
+}
+
+ */

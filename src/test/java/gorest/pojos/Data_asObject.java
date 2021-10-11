@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.testng.annotations.Ignore;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -15,120 +14,72 @@ import org.testng.annotations.Ignore;
         "gender",
         "status"
 })
-
-public class Data {
+public class Data_asObject {
 
     @JsonProperty("id")
     private Integer id;
     @JsonProperty("name")
-    private String name;
+    private Object name;
     @JsonProperty("email")
-    private String email;
+    private Object email;
     @JsonProperty("gender")
-    private String gender;
+    private Object gender;
     @JsonProperty("status")
-    private String status;
+    private Object status;
 
     /**
      * No args constructor for use in serialization
      */
-    public Data() {
+    public Data_asObject() {
     }
+
+
 
     /**
      * @param gender
      * @param name
-     * @param id
      * @param email
      * @param status
      */
-    public Data(Integer id, String name, String email, String gender, String status) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.gender = gender;
-        this.status = status;
-    }
-    public Data(String name, String email, String gender, String status) {
+    public Data_asObject(Object name, Object email, Object gender, Object status) {
         super();
         this.name = name;
         this.email = email;
         this.gender = gender;
         this.status = status;
     }
-    public Data(Object name, String email, String gender, String status) {
-        super();
-        this.name = (String) name;
-        this.email = email;
-        this.gender = gender;
-        this.status = status;
-    }
-    public Data(String email, String gender, String status) {
-        super();
-        this.email = email;
-        this.gender = gender;
-        this.status = status;
-    }
 
-
-    public Data(String gender) {
-        super();
-
-        this.gender = gender;
-
-    }
-
-    @JsonProperty("id")
-    public Integer getId() {
-        return id;
-    }
-
-    @JsonProperty("id")
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    @JsonProperty("name")
-    public String getName() {
+    public Object getName() {
         return name;
     }
 
-    @JsonProperty("name")
-    public void setName(String name) {
+    public void setName(Object name) {
         this.name = name;
     }
 
-    @JsonProperty("email")
-    public String getEmail() {
+    public Object getEmail() {
         return email;
     }
 
-    @JsonProperty("email")
-    public void setEmail(String email) {
+    public void setEmail(Object email) {
         this.email = email;
     }
 
-    @JsonProperty("gender")
-    public String getGender() {
+    public Object getGender() {
         return gender;
     }
 
-    @JsonProperty("gender")
-    public void setGender(String gender) {
+    public void setGender(Object gender) {
         this.gender = gender;
     }
 
-    @JsonProperty("status")
-    public String getStatus() {
+    public Object getStatus() {
         return status;
     }
 
-    @JsonProperty("status")
-    public void setStatus(String status) {
+    public void setStatus(Object status) {
         this.status = status;
     }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
