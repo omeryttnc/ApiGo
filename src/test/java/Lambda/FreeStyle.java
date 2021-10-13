@@ -7,11 +7,11 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -23,47 +23,17 @@ public class FreeStyle {
     ApiGo apiGoPojo;
     JsonPath json;
     String token = "3158b67b6b0e956ecb5a1f06fe311f94a45c5f6268f56db7272f51e75f050304";
-    List<String> allMail = new ArrayList<>();
-    List<Integer> allId = new ArrayList<>();
-    List<String> allName = new ArrayList<>();
-    @BeforeMethod
-    public void setup() throws IOException {
-        response = given().
-                accept(ContentType.JSON).
-                when().
-                get(endpoint);
-        response.
-                then().
-                assertThat().
-                contentType(ContentType.JSON);
-
-        apiGoPojo = objectMapper.readValue(response.asString(), ApiGo.class);
-        // apiGoPojo = response.body().as(ApiGo.class);
+    data_lambda data_lambda = new data_lambda();
+    List<Integer> id = new ArrayList<>(Arrays.asList(data_lambda.class_allid));
+    List<String> email = new ArrayList<>(Arrays.asList(data_lambda.class_allEmail));
+    List<String> name = new ArrayList<>(Arrays.asList(data_lambda.class_allName));
 
 
-        response = given().contentType(ContentType.JSON).auth().oauth2(token).when().get(endpoint);
-        json = response.jsonPath();
-
-        int totalPage = json.getInt("meta.pagination.pages");
-
-        for (int i = 1; i <= 2; i++) {
-
-            response = given().queryParam("page", i)
-                    .when().get(endpoint);
-
-            apiGoPojo = objectMapper.readValue(response.asString(), ApiGo.class);
+    @Test
+    public void testName() {
 
 
-            for (Data w : apiGoPojo.getData()) {
-
-                allId.add(w.getId());
-                allMail.add(w.getEmail());
-                allName.add(w.getName());
-            }
-
-        }
     }
-
     //id natural order assertion
     //id unique assertion
     //names are not NULL assertion
