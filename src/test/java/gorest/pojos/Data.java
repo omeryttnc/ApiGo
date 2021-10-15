@@ -1,9 +1,10 @@
 package gorest.pojos;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "id",
@@ -54,9 +55,16 @@ public class Data {
         this.gender = gender;
         this.status = status;
     }
-    public Data(String email, String gender, String status) {
+//    public Data(String email, String gender, String status) {
+//        super();
+//        this.email = email;
+//        this.gender = gender;
+//        this.status = status;
+//    }
+
+    public Data(String name, String gender, String status) {
         super();
-        this.email = email;
+        this.name = name;
         this.gender = gender;
         this.status = status;
     }
