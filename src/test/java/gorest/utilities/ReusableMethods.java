@@ -3,14 +3,13 @@ package gorest.utilities;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.javafaker.Faker;
 import gorest.pojos.ApiGo;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Random;
 
 import static io.restassured.RestAssured.given;
 
@@ -20,8 +19,6 @@ public class ReusableMethods {
     public static ObjectMapper objectMapper = new ObjectMapper();
     public static ApiGo apiGo;
 
-    public static String endPoint="https://gorest.co.in/public-api/users/";
-    public static String token="5d04fe08a73c74ff19ad6559ca5c4933457919bd915272fc0b55c0c8933f0783";
 
     public static Response getresponse(String url) {
         response = given().
@@ -43,15 +40,27 @@ public class ReusableMethods {
         apiGo = objectMapper.readValue(response.asString(), ApiGo.class);
         return response;
     }
-
-    public static void postMethod(Map body) {
+    public static String RandomStatus(){
+        Random random = new Random();
+        String[] status = {"active", "inactive"};
+        int number = random.nextInt(2);
+        return status[number];
+    }
+    public static String RandomGender(){
+        Random random = new Random();
+        String[] gender = {"male", "female"};
+        int number = random.nextInt(2);  //0 1
+        return gender[number];
+    }
+    public static List<Integer> getId()  {
+        Response response;
+        JsonPath jsonPath;
         response = given().
                 contentType(ContentType.JSON).
-                auth().oauth2(token).
-                body(body).
-                when().
-                post(endPoint);
-        response.prettyPrint();
+                auth().oauth2(ConfigurationReader.getProperty("token")).
+                when().get(ConfigurationReader.getProperty("endPoint"));
+        jsonPath = response.jsonPath();
+        return jsonPath.getList("data.id");
     }
 
 }
