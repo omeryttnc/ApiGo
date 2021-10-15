@@ -66,6 +66,7 @@ public class FreeStyle {
         Assert.assertTrue(name.stream().anyMatch(t -> t.charAt(0) == 'A' || t.charAt(0) == 'D'));
         //check duplicate names
         Set<String> collect = name.stream().collect(Collectors.toSet());
+        Set<String> collect2 = new HashSet<>(name);
         Assert.assertEquals(name.size(),collect.size());
 
     }
