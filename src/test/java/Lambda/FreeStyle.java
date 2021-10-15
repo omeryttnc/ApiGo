@@ -2,19 +2,16 @@ package Lambda;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gorest.pojos.ApiGo;
-import gorest.pojos.Data;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.testng.annotations.BeforeMethod;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
-
-import static io.restassured.RestAssured.given;
+import java.util.stream.Collectors;
 
 public class FreeStyle {
     Response response;
@@ -31,6 +28,9 @@ public class FreeStyle {
 
     @Test
     public void testName() {
+
+        List<Integer> id_natural_order = id.stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList());
+        Assert.assertNotEquals(id, id_natural_order);
 
 
     }
