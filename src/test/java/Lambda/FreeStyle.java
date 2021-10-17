@@ -21,7 +21,7 @@ public class FreeStyle {
     List<Integer> id = new ArrayList<>(Arrays.asList(data_lambda.class_allid));
     List<String> email = new ArrayList<>(Arrays.asList(data_lambda.class_allEmail));
     List<String> name = new ArrayList<>(Arrays.asList(data_lambda.class_allName));
-
+    List<String> gender = new ArrayList<>(Arrays.asList(data_lambda.class_allGender));
     List<Integer> l = new ArrayList<>(Arrays.asList(2, 121, 211, 2, 7));
     Set<Integer> t = new HashSet<>(l);
 
@@ -67,7 +67,7 @@ public class FreeStyle {
         //check duplicate names
         Set<String> collect = name.stream().collect(Collectors.toSet());
         Set<String> collect2 = new HashSet<>(name);
-        Assert.assertEquals(name.size(),collect.size());
+        Assert.assertEquals(name.size(), collect.size());
 
     }
 
