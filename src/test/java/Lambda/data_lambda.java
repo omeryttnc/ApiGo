@@ -1,6 +1,14 @@
 package Lambda;
 
 public class data_lambda {
+String[] class_allGender= {"female","male","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","female",
+        "male","female","male","female","female","male","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","female",
+        "male","female","male","female","female","male","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","female",
+        "male","female","male","female","female","male","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","female",
+        "male","female","male","female","female","male","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","female",
+        "male","female","male","female","female","male","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","female",
+        "male","female","male","female","male","male","male","male","male","male","male","male","male","male","male","male","male","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","female",
+        "male","female","male","female","male","male","male","male","male","male","male","male","male","male","male","male"};
 
 
 

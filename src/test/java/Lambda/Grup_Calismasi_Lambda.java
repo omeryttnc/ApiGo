@@ -2,6 +2,7 @@ package Lambda;
 
 import org.testng.annotations.Test;
 
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -270,13 +271,15 @@ public class Grup_Calismasi_Lambda {
         System.out.println(abla);
         System.out.println();
         //who are the abi elder than 36
-        personList.stream().filter(t->t.age>36 && t.surname.equals("abi")).forEach(t-> System.out.println(t.name));
+        personList.stream().filter(t -> t.age > 36 && t.surname.equals("abi")).forEach(t -> System.out.println(t.name));
         System.out.println();
-        personList.stream().filter(t->t.age>36 && t.surname.equals("abi")).forEach(t-> System.out.println(t.toString()));
+        System.out.println("***");
         System.out.println();
         //ismi en uzun olan abla
-        //String abla1 = String.valueOf(personList.stream().filter(t -> t.surname.equals("abla")).max(personList.name.length()));
-        //System.out.println(abla1);
+
+        System.out.println("////////");
+     personList.stream().filter(t -> t.surname.equals("abla")).sorted((Comparator.comparingInt(person -> person.name.length()))).forEach(t-> System.out.println(t.name));
+
 
 
         //toMap isim ve yas olan map olustur
@@ -309,8 +312,8 @@ public class Grup_Calismasi_Lambda {
         Stream stream = Arrays.stream(way_3_string);
 
 
-        Arrays.stream(way_1).dropWhile(t -> t % 2 == 0).forEach(Lambda::getPrint);
-        Arrays.stream(way_1).takeWhile(t -> t % 2 == 0).forEach(Lambda::getPrint);
+        //  Arrays.stream(way_1).dropWhile(t -> t % 2 == 0).forEach(Lambda::getPrint);
+        // Arrays.stream(way_1).takeWhile(t -> t % 2 == 0).forEach(Lambda::getPrint);
 
 
     }
