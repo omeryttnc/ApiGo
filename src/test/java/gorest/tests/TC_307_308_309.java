@@ -52,7 +52,7 @@ public class TC_307_308_309 {
     @Test
     public void tc_308() {
 
-        singleData.put("gender", "male");
+        singleData.put("gender", "female");
 
         patchMethod(singleData);
 
@@ -83,5 +83,24 @@ public class TC_307_308_309 {
         System.out.println("actual = " + actual);
 
         assertEquals(actual, expected);
+    }
+
+    @Test
+    public void deleteData(){
+
+        singleData.put("email","chakradhar_iyengar@ortiz.name");
+        response = given()
+                .contentType(ContentType.JSON).and().auth().oauth2(token)
+                .and().body(singleData)
+                .when().delete(endPoint + "101");
+
+        assertEquals(response.statusCode(),200);
+        assertEquals(response.contentType(),"application/json; charset=utf-8");
+
+        json= response.jsonPath();
+
+        String actualmessage=json.getString("data.message");
+        assertEquals(actualmessage,"Resource not found");
+
     }
 }
