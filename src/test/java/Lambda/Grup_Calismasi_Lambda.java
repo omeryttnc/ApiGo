@@ -261,7 +261,7 @@ public class Grup_Calismasi_Lambda {
         personList.add(new Person("hasan", "abi", 36, Arrays.asList(2131231, 21312312)));
         personList.add(new Person("omer", "abi", 35, Arrays.asList(2312312, 1231231)));
         personList.add(new Person("pinar", "abla", 30, Arrays.asList(2323213, 1231231)));
-        personList.add(new Person("hatice", "abla", 30, Arrays.asList(324567, 4653)));
+        personList.add(new Person("hatice", "abla", 31, Arrays.asList(324567, 4653)));
 
         /*
         homework
@@ -276,15 +276,44 @@ public class Grup_Calismasi_Lambda {
         System.out.println("***");
         System.out.println();
         //ismi en uzun olan abla
-
+//persons.stream().min((p1, p2) -> p1.getBrithdate().compareTo(p2.getBrithdate()))
+//        personList.stream().((p1,p2)->p1.name.length())
         System.out.println("////////");
-     personList.stream().filter(t -> t.surname.equals("abla")).sorted((Comparator.comparingInt(person -> person.name.length()))).forEach(t-> System.out.println(t.name));
-
-
-
+        personList.stream().filter(t -> t.surname.equals("abla")).sorted((Comparator.comparingInt(person -> person.name.length()))).forEach(t -> System.out.println(t.name));
+        System.out.println();
+        personList.stream().map(t -> t.phoneNumber).forEach(Lambda::getPrint);
+        System.out.println();
+        personList.stream().flatMap(t -> t.phoneNumber.stream()).forEach(Lambda::getPrint);
         //toMap isim ve yas olan map olustur
-        //yas ve dogum tarihi olan map olustur
+        Map<String, Integer> collect = personList.stream().collect(Collectors.toMap(x -> x.name, y -> y.age));
+        System.out.println();
+        System.out.println(collect);
+        System.out.println();
+        //yas ve surname olan map olustur
+        Map<Integer, String> collect1 = personList.stream().collect(Collectors.toMap(k -> k.age, v -> v.surname));
+        System.out.println();
+        System.out.println(collect1);
+        System.out.println();
+        //yas ve dogum yili olan map olustur
+
+        Map<Integer, Integer> collect2 = personList.stream().collect(Collectors.toMap(k -> k.age, v -> 2021 - v.age));
+
+        System.out.println();
+        System.out.println(collect2);
+        System.out.println();
+        //butun isimleri listeye ekle
+        List<String> collect3 = personList.stream().map(t -> t.name).collect(Collectors.toList());
+        System.out.println();
+        System.out.println(collect3);
+        System.out.println();
         //flatMap
+        List<List<Integer>> collect4 = personList.stream().map(t -> t.phoneNumber).collect(Collectors.toList());
+        System.out.println();
+        System.out.println(collect4);
+        System.out.println();
+        List<Integer> collect5 = personList.stream().flatMap(t -> t.phoneNumber.stream()).collect(Collectors.toList());
+        System.out.println();
+        System.out.println(collect5);
         //Matchers
         //any
         //all
@@ -292,13 +321,29 @@ public class Grup_Calismasi_Lambda {
 
         //array lambda 3 ways
 
-        int[] way_1 = {12, 9, 13, 5, 8};
-        int[] way_2 = {12, 9, 13, 5, 8};
-        int[] way_3 = {12, 9, 13, 5, 8};
+        int[] way_1 = {25, 13, 19, 18, 5, 87};
+        int[] way_2 = {252, 12, 9, 13, 5, 8};
+        int[] way_3 = {25, 12, 9, 13, 5, 8};
         String[] way_3_string = {"mahmut", "okkes", "murtaza"};
-
-
+        System.out.println("**************");
+        System.out.println();
+        //1 way
+        Arrays.stream(way_1).forEach(Lambda::getPrint);
+        //2 way
+        IntStream way_2_stream = Arrays.stream(way_2);
+        System.out.println();
+        way_2_stream.forEach(Lambda::getPrint);
+        System.out.println();
+        //3 way
+        List<int[]> way_3_list = Arrays.asList(way_2);
+        System.out.println();
+        way_3_list.stream().forEach(t -> System.out.println(Arrays.toString(t)));
+        System.out.println();
         //takedrop whiledrop
+        System.out.println();
+        Arrays.stream(way_2).dropWhile(t -> t % 2 == 0).forEach(Lambda::getPrint);
+        System.out.println();
+        Arrays.stream(way_2).takeWhile(t -> t % 2 == 0).forEach(Lambda::getPrint);
 
 
         //way 1
@@ -310,11 +355,22 @@ public class Grup_Calismasi_Lambda {
         IntStream way_3_stream = Arrays.stream(way_3);
 //        way_3_stream.sorted().forEach(Lambda::getPrint);
         Stream stream = Arrays.stream(way_3_string);
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
 
+        Arrays.stream(way_2).dropWhile(t -> t % 2 == 0).forEach(Lambda::getPrint);
+        System.out.println();
+        Arrays.stream(way_2).takeWhile(t -> t % 2 == 0).forEach(Lambda::getPrint);
+//persons.removeIf(p -> p.getGender().equals(Gender.WOMAN));
 
-        //  Arrays.stream(way_1).dropWhile(t -> t % 2 == 0).forEach(Lambda::getPrint);
-        // Arrays.stream(way_1).takeWhile(t -> t % 2 == 0).forEach(Lambda::getPrint);
+    }
 
+    @Test
+    public void testName() {
+        /*
 
+         */
     }
 }
