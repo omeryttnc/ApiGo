@@ -60,6 +60,7 @@ public class Grup_Calismasi_Lambda {
         }
 
         list.stream().filter(t -> t % 2 != 0).forEach(t -> System.out.print(t + " ; "));
+        list.stream().filter(t -> t !=null);
         list.stream().filter(Lambda::getOdd).forEach(Lambda::getPrint);
 
         //3 e bolunenleri yazdir

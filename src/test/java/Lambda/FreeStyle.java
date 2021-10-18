@@ -41,7 +41,11 @@ public class FreeStyle {
         // apiGoPojo = response.body().as(ApiGo.class);
 
 
-        response = given().contentType(ContentType.JSON).auth().oauth2(token).when().get(endpoint);
+        response = given()
+                  .contentType(ContentType.JSON)
+                  .auth().oauth2(token)
+                  .when()
+                  .get(endpoint);
         json = response.jsonPath();
 
         int totalPage = json.getInt("meta.pagination.pages");
