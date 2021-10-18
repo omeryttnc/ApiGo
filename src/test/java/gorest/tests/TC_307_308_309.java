@@ -6,8 +6,10 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
+
 import java.util.HashMap;
 import java.util.Map;
+
 import static io.restassured.RestAssured.*;
 import static org.testng.Assert.*;
 
@@ -87,6 +89,7 @@ public class TC_307_308_309 {
 
     @Test
     public void deleteData(){
+
 
         singleData.put("email","chakradhar_iyengar@ortiz.name");
         response = given()
