@@ -2,9 +2,11 @@ package Lambda;
 
 import org.testng.annotations.Test;
 
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Grup_Calismasi_Lambda {
     @Test
@@ -164,7 +166,7 @@ public class Grup_Calismasi_Lambda {
         System.out.println();
 
         //listString.stream().filter(Lambda::filter_k).map(String::length).forEach(Lambda::getPrint);
-        listString.stream().filter(t->t.contains("k")).map(String::length).forEach(Lambda::getPrint);
+        listString.stream().filter(t -> t.contains("k")).map(String::length).forEach(Lambda::getPrint);
         System.out.println();
         System.out.println(toplam);
         // butun isimleri yan yana yazdir
@@ -253,38 +255,66 @@ public class Grup_Calismasi_Lambda {
 
     @Test
     public void day3() {
-
+        List<Person> personList = new ArrayList<>();
+        personList.add(new Person("abdullah", "abi", 38, Arrays.asList(123456, 454545)));
+        personList.add(new Person("erkan", "abi", 37, Arrays.asList(5457878, 4548787)));
+        personList.add(new Person("hasan", "abi", 36, Arrays.asList(2131231, 21312312)));
+        personList.add(new Person("omer", "abi", 35, Arrays.asList(2312312, 1231231)));
+        personList.add(new Person("pinar", "abla", 30, Arrays.asList(2323213, 1231231)));
+        personList.add(new Person("hatice", "abla", 30, Arrays.asList(324567, 4653)));
 
         /*
         homework
-
-
-
          */
+        //how many abla
+        long abla = personList.stream().filter(t -> t.surname.equals("abla")).count();
+        System.out.println(abla);
+        System.out.println();
+        //who are the abi elder than 36
+        personList.stream().filter(t -> t.age > 36 && t.surname.equals("abi")).forEach(t -> System.out.println(t.name));
+        System.out.println();
+        System.out.println("***");
+        System.out.println();
+        //ismi en uzun olan abla
+
+        System.out.println("////////");
+     personList.stream().filter(t -> t.surname.equals("abla")).sorted((Comparator.comparingInt(person -> person.name.length()))).forEach(t-> System.out.println(t.name));
 
 
 
-
+        //toMap isim ve yas olan map olustur
+        //yas ve dogum tarihi olan map olustur
+        //flatMap
         //Matchers
         //any
         //all
         //none
 
+        //array lambda 3 ways
 
         int[] way_1 = {12, 9, 13, 5, 8};
         int[] way_2 = {12, 9, 13, 5, 8};
         int[] way_3 = {12, 9, 13, 5, 8};
+        String[] way_3_string = {"mahmut", "okkes", "murtaza"};
+
+
+        //takedrop whiledrop
+
+
         //way 1
-        System.out.println();
-        Arrays.stream(way_1).sorted().forEach(Lambda::getPrint);
+        //Arrays.stream(way_1).sorted().forEach(Lambda::getPrint);
         //way 2
         List<int[]> way_2_list = Arrays.asList(way_2);
-        System.out.println();
-        way_2_list.stream().sorted().forEach(t -> System.out.println(Arrays.toString(t)));
+        //      way_2_list.stream().sorted().forEach(t -> System.out.println(Arrays.toString(t)));
         //way 3 stream kullanilmiyor cunku zaten kullandik
         IntStream way_3_stream = Arrays.stream(way_3);
-        System.out.println();
-        way_3_stream.sorted().forEach(Lambda::getPrint);
+//        way_3_stream.sorted().forEach(Lambda::getPrint);
+        Stream stream = Arrays.stream(way_3_string);
+
+
+        //  Arrays.stream(way_1).dropWhile(t -> t % 2 == 0).forEach(Lambda::getPrint);
+        // Arrays.stream(way_1).takeWhile(t -> t % 2 == 0).forEach(Lambda::getPrint);
+
 
     }
 }
