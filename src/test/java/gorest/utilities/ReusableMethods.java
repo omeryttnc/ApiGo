@@ -28,7 +28,8 @@ public class ReusableMethods {
         // response.prettyPrint();
         json = response.jsonPath();
         return response;
-    }
+    }        Random random = new Random();
+
 
 
     public static Response getResponsePojo(String url) throws JsonProcessingException {
