@@ -1,5 +1,6 @@
 package Lambda;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.nio.charset.StandardCharsets;
@@ -263,8 +264,7 @@ public class Grup_Calismasi_Lambda {
         personList.add(new Person("pinar", "abla", 30, Arrays.asList(2323213, 1231231)));
         personList.add(new Person("hatice", "abla", 31, Arrays.asList(324567, 4653)));
 
-        /*
-        homework
+        /*        homework
          */
         //how many abla
         long abla = personList.stream().filter(t -> t.surname.equals("abla")).count();
@@ -369,8 +369,72 @@ public class Grup_Calismasi_Lambda {
 
     @Test
     public void testName() {
-        /*
+        List<String> almak_istenenler = Arrays.asList("tomatoes", "pepper", "milk", "banana");
+        List<String> alinanlar = Arrays.asList("pepper", "banana");
+        List<String> alinmayacaklar = Arrays.asList("tea", "sugar");
 
+        Map<String , Product> map_in_the_cart = new HashMap<>();
+        map_in_the_cart.put("uzum",new Product("$2.5","3","$7.5"));
+        map_in_the_cart.put("limon",new Product("£3","6","£18"));
+        map_in_the_cart.put("elma",new Product("£5","2","£10"));
+        map_in_the_cart.put("karpuz",new Product("£2","9","£18"));
+        map_in_the_cart.put("kereviz",new Product("£3","6","£18"));
+
+        double total_Price= 71.5;
+
+        Map<String , Product> map_on_the_invoice = new HashMap<>();
+        map_on_the_invoice.put("uzum",new Product("$2.5","3","$7.5"));
+        map_on_the_invoice.put("limon",new Product("£3","6","£18"));
+        map_on_the_invoice.put("elma",new Product("£5","2","£10"));
+        map_on_the_invoice.put("karpuz",new Product("£2","9","£18"));
+        map_on_the_invoice.put("kereviz",new Product("£3","6","£18"));
+        
+        
+        
+        
+        
+        
+//        map_on_the_invoice.put(1,new Product("uzum","$2.5","3","$7.5"));
+//        map_on_the_invoice.put(2,new Product("limon","£3","6","£18"));
+//        map_on_the_invoice.put(3,new Product("elma","£5","2","£10"));
+//        map_on_the_invoice.put(4,new Product("karpuz","£2","9","£18"));
+//        map_on_the_invoice.put(5,new Product("kereviz","£3","6","£18"));
+//
+
+
+        //her bir product in total price i price * quantity mi
+        //total price toplam price a esit mi
+        //invoice deki urunlerle cart deki urunler ayni mi
+
+
+
+
+
+
+
+        //ustteki listeyi yazdiramiyoruz
+        /*
+        Actions actions = new Actions(Driver.getDriver());
+actions.moveToElement(elements.getCartPage().sub_del_total_1.get(0)).build().perform();
+
+
+        Driver.getDriver().navigate().refresh();
+
+        driver.FindElement(By.Id("some_option")).getAttribute("selected");
+
+
+        WebDriver driver; // Assigned elsewhere
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.getElementById('//id of element').setAttribute('attr', '10')");
+
+               String mainWindow = Driver.getDriver().getWindowHandle();
+        Set<String> allWindows = Driver.getDriver().getWindowHandles();
+        for (String paypalWindow : allWindows) {
+            if (!paypalWindow.equals(mainWindow)) {
+                Driver.getDriver().switchTo().window(paypalWindow);
+            }
+        }
          */
     }
 }
+
