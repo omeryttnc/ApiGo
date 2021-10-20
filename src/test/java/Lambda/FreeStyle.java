@@ -62,6 +62,7 @@ public class FreeStyle {
             }
 
         }
+
     }
 
     //id natural order assertion
