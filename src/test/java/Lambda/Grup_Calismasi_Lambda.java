@@ -1,5 +1,11 @@
 package Lambda;
 
+import gorest.utilities.Driver;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -373,27 +379,23 @@ public class Grup_Calismasi_Lambda {
         List<String> alinanlar = Arrays.asList("pepper", "banana");
         List<String> alinmayacaklar = Arrays.asList("tea", "sugar");
 
-        Map<String , Product> map_in_the_cart = new HashMap<>();
-        map_in_the_cart.put("uzum",new Product("$2.5","3","$7.5"));
-        map_in_the_cart.put("limon",new Product("£3","6","£18"));
-        map_in_the_cart.put("elma",new Product("£5","2","£10"));
-        map_in_the_cart.put("karpuz",new Product("£2","9","£18"));
-        map_in_the_cart.put("kereviz",new Product("£3","6","£18"));
+        Map<String, Product> map_in_the_cart = new HashMap<>();
+        map_in_the_cart.put("uzum", new Product("$2.5", "3", "$7.5"));
+        map_in_the_cart.put("limon", new Product("£3", "6", "£18"));
+        map_in_the_cart.put("elma", new Product("£5", "2", "£10"));
+        map_in_the_cart.put("karpuz", new Product("£2", "9", "£18"));
+        map_in_the_cart.put("kereviz", new Product("£3", "6", "£18"));
 
-        double total_Price= 71.5;
+        double total_Price = 71.5;
 
-        Map<String , Product> map_on_the_invoice = new HashMap<>();
-        map_on_the_invoice.put("uzum",new Product("$2.5","3","$7.5"));
-        map_on_the_invoice.put("limon",new Product("£3","6","£18"));
-        map_on_the_invoice.put("elma",new Product("£5","2","£10"));
-        map_on_the_invoice.put("karpuz",new Product("£2","9","£18"));
-        map_on_the_invoice.put("kereviz",new Product("£3","6","£18"));
-        
-        
-        
-        
-        
-        
+        Map<String, Product> map_on_the_invoice = new HashMap<>();
+        map_on_the_invoice.put("uzum", new Product("$2.5", "3", "$7.5"));
+        map_on_the_invoice.put("limon", new Product("£3", "6", "£18"));
+        map_on_the_invoice.put("elma", new Product("£5", "2", "£10"));
+        map_on_the_invoice.put("karpuz", new Product("£2", "9", "£18"));
+        map_on_the_invoice.put("kereviz", new Product("£3", "6", "£18"));
+
+
 //        map_on_the_invoice.put(1,new Product("uzum","$2.5","3","$7.5"));
 //        map_on_the_invoice.put(2,new Product("limon","£3","6","£18"));
 //        map_on_the_invoice.put(3,new Product("elma","£5","2","£10"));
@@ -407,34 +409,13 @@ public class Grup_Calismasi_Lambda {
         //invoice deki urunlerle cart deki urunler ayni mi
 
 
-
-
-
-
-
-        //ustteki listeyi yazdiramiyoruz
-        /*
-        Actions actions = new Actions(Driver.getDriver());
-actions.moveToElement(elements.getCartPage().sub_del_total_1.get(0)).build().perform();
-
-
-        Driver.getDriver().navigate().refresh();
-
-        driver.FindElement(By.Id("some_option")).getAttribute("selected");
-
-
-        WebDriver driver; // Assigned elsewhere
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("document.getElementById('//id of element').setAttribute('attr', '10')");
-
-               String mainWindow = Driver.getDriver().getWindowHandle();
-        Set<String> allWindows = Driver.getDriver().getWindowHandles();
-        for (String paypalWindow : allWindows) {
-            if (!paypalWindow.equals(mainWindow)) {
-                Driver.getDriver().switchTo().window(paypalWindow);
-            }
-        }
-         */
     }
+
+
+
+
+
+
+
 }
 

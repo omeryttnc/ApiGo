@@ -1,5 +1,6 @@
 package gorest.tests.get;
 
+import gorest.utilities.ReusableMethods;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -57,7 +58,6 @@ public class TC_Get_01_05 {
         System.out.println(total);
 
         Assert.assertNotEquals(total, "2000");
-
         //assertion2
         // response.then().assertThat().body("meta.pagination.total", Matchers.equalTo(200));//not equals kullanamiyoruz
         //Matchers classinin importunu "import static org.hamcrest.Matchers.*;"
