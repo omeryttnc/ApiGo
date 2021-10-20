@@ -22,6 +22,8 @@ public class Lambda {
     public static boolean filter_k(String s) {
         return s.contains("k");
     }
+
+
 }
 
 
