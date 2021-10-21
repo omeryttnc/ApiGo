@@ -2,13 +2,12 @@ package Lambda;
 
 import org.testng.annotations.Test;
 
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class Grup_Calismasi_Lambda {
+public class Grup_Calismasi_Lambda2 {
     @Test
     public void test() {
         List<Integer> list = new ArrayList<>();
