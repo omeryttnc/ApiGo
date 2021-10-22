@@ -285,7 +285,9 @@ public class Grup_Calismasi_Lambda {
 
         //toMap isim ve yas olan map olustur
         //yas ve dogum tarihi olan map olustur
+
         //flatMap
+
         //Matchers
         //any
         //all
@@ -318,4 +320,8 @@ public class Grup_Calismasi_Lambda {
 
 
     }
+
+
+
+
 }
