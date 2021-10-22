@@ -28,7 +28,7 @@ public class put_patch {
             response.then().assertThat().statusCode(200);
             Assert.assertEquals(response.statusCode(),200);
         }
-        @Test
+        @Test  //data update (name,email,gender,status)
         public void TC_01() {
             putMap.put("name", "Sarah");
             putMap.put("email", "Sarah@gmail.com");
@@ -47,7 +47,7 @@ public class put_patch {
 
 
         }
-        @Test
+        @Test  //data update (email,gender,status)
         public void Tc_02() {
             putMap.put("email", "Sarah@gmail.com");
             putMap.put("gender", "female");

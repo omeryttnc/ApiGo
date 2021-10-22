@@ -1,7 +1,7 @@
 package Lambda;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gorest.pojos.ApiGo;
+//import gorest.pojos.ApiGo;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -14,7 +14,7 @@ public class FreeStyle {
     Response response;
     String endpoint = "https://gorest.co.in/public-api/users/";
     ObjectMapper objectMapper = new ObjectMapper();
-    ApiGo apiGoPojo;
+   // ApiGo apiGoPojo;
     JsonPath json;
     String token = "3158b67b6b0e956ecb5a1f06fe311f94a45c5f6268f56db7272f51e75f050304";
     data_lambda data_lambda = new data_lambda();
