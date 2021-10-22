@@ -16,7 +16,7 @@ import java.util.*;
 
 import static io.restassured.RestAssured.given;
 
-public class TC_14_15_20_Get {
+public class TC_Get_14_15_20 {
 
 
     Response response;

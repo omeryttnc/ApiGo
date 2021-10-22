@@ -31,7 +31,7 @@ public class Put_Patch_10_11_12{
         response= given().contentType(ContentType.JSON).auth().oauth2(token).body(putBody).when().put(endpoint+idNo);
     }
 
-    @Test
+    @Test  //data update with wrong type of name
     public void TC_10(){
         names.add(986798);
         names.add("7856");
@@ -48,7 +48,7 @@ public class Put_Patch_10_11_12{
 
 
     }
-    @Test
+    @Test  //data update with wrong type of email
     public void TC_11(){
         emails.add("gmail.com");
         emails.add("klm@");
@@ -70,7 +70,7 @@ public class Put_Patch_10_11_12{
 
 
     }
-    @Test
+    @Test  //data update  with wrong type of gender
     public void TC_12(){
         genders.add("f");
         genders.add("m");
