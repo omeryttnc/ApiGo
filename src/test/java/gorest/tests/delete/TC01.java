@@ -18,7 +18,6 @@ public class TC01 {
     Response response;
     String endPoint="https://gorest.co.in/public-api/users/";
     String token="5d04fe08a73c74ff19ad6559ca5c4933457919bd915272fc0b55c0c8933f0783";
-    Map<String,Object> putMap=new HashMap<>();
     JsonPath jsonPath;
 
 
@@ -36,7 +35,7 @@ public class TC01 {
     }
 
 
-    //herhangi bir id ye gore sil
+    //herhangi bir id ye gore silelim
     @Test
     public void TC01() {
         response = given().accept(ContentType.JSON).when().get(endPoint);
@@ -44,12 +43,12 @@ public class TC01 {
         deleteMethod(99);
         jsonPath = response.jsonPath();
 
-//        Assert.assertEquals(jsonPath.getString("data"),null);
-//        Assert.assertEquals(jsonPath.getString("meta"),null);
-//        Assert.assertEquals(jsonPath.getInt("code"),204);
-//        getMethod(99);
-//        jsonPath = response.jsonPath();
-//        Assert.assertEquals(jsonPath.getString("data.message"),"Resource not found");
+        Assert.assertEquals(jsonPath.getString("data"),null);
+        Assert.assertEquals(jsonPath.getString("meta"),null);
+        Assert.assertEquals(jsonPath.getInt("code"),204);
+        getMethod(99);
+        jsonPath = response.jsonPath();
+        Assert.assertEquals(jsonPath.getString("data.message"),"Resource not found");
 
     }
 }
