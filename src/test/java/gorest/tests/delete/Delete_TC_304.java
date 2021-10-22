@@ -31,7 +31,7 @@ public class Delete_TC_304 {
         response = given().queryParam("page", pageNumber)
                 .when().get(endpoint);
 
-        JsonPath json = response.jsonPath();
+         json = response.jsonPath();
 
         for (int i = 0; i < mapOfEmails.size(); i++) {
             if (mapOfEmails.get(i).get(key).contains(value)) {
@@ -54,8 +54,8 @@ public class Delete_TC_304 {
 
         @Test
         public  void TC_304(){
-            System.out.println(deleteMethod(4, "email", "jast.co"));
-            Assert.assertEquals(deleteMethod(4, "email", "jast.co").size(), 0);
+            System.out.println(deleteMethod(1, "email", "1634904686692ce.com"));
+            Assert.assertEquals(deleteMethod(1, "email", "1634904686692ce.com").size(), 0);
         }
 
     }

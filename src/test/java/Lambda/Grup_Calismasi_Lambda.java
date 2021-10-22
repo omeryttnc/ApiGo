@@ -414,8 +414,10 @@ public class Grup_Calismasi_Lambda {
         public void distinctNumber(){
             //Soru: Create List of square of all distinct numbers
             List<Integer> numbers = Arrays.asList(9, 10, 3, 4, 7, 3, 4);
-            List<Integer> newList=numbers.stream().map(t->t*t).distinct().collect(Collectors.toList());
-            System.out.println("newList = " + newList);
+
+
+//            List<Integer> newList=numbers.stream().map(t->t*t).distinct().collect(Collectors.toList());
+//            System.out.println("newList = " + newList);
         }
         @Test
         public void numbers(){
