@@ -408,6 +408,8 @@ public class Grup_Calismasi_Lambda {
         //total price toplam price a esit mi
         //invoice deki urunlerle cart deki urunler ayni mi
 
+    }
+@Test
     public void shopping() {
         //soru 1
 
@@ -434,7 +436,10 @@ public class Grup_Calismasi_Lambda {
 //         System.out.println("Total : " + total);
         // New way:
         List<Integer> costBeforeTax = Arrays.asList(100, 200, 300, 400, 500);
-        double bill = costBeforeTax.stream().map((cost) -> cost + .12 * cost).reduce((sum, cost) -> sum + cost).get();
+        Optional<Double> bill=costBeforeTax.stream().map(t->t*1.12).reduce(Double::sum);
+        //double bill=costBeforeTax.stream().map(t->t*1.12).reduce(Double::sum).get();
+
+//        double bill = costBeforeTax.stream().map((cost) -> cost + .12 * cost).reduce((sum, cost) -> sum + cost).get();
         System.out.println("Total : " + bill);
         //Output Total : 1680.0 Total : 1680.0
 
@@ -455,9 +460,12 @@ public class Grup_Calismasi_Lambda {
             //Soru: Create List of square of all distinct numbers
             List<Integer> numbers = Arrays.asList(9, 10, 3, 4, 7, 3, 4);
 
+            //List<Integer> newList=numbers.stream().distinct().map(t->t*t).collect(Collectors.toList());
+            Set<Integer> newList=numbers.stream().map(t->t*t).collect(Collectors.toSet());
+
 
 //            List<Integer> newList=numbers.stream().map(t->t*t).distinct().collect(Collectors.toList());
-//            System.out.println("newList = " + newList);
+            System.out.println("newList = " + newList);
         }
         @Test
         public void numbers(){
@@ -507,6 +515,12 @@ public class Grup_Calismasi_Lambda {
 
             /// a/A ile baslayan ve uzunlugu 5 ten kucuk olan isimleri bulalim
 
+            List <String> Anames=list.stream().filter(t->t.substring(0,1).toUpperCase().equals("A")&&t.length()<5).collect(Collectors.toList());
+            System.out.println("Anames = " + Anames);
+            ///i ile biten farkli isimleri uygun bir collectiona koyalim
+            List<String> iNames=list.stream().filter(t->t.charAt(t.length()-1)=='i').collect(Collectors.toList());
+            System.out.println("iNames = " + iNames);
+
     }
 
 
@@ -516,12 +530,8 @@ public class Grup_Calismasi_Lambda {
 
 
 }
-            List <String> Anames=list.stream().filter(t->t.substring(0,1).toUpperCase().equals("A")&&t.length()<5).collect(Collectors.toList());
-            System.out.println("Anames = " + Anames);
-            ///i ile biten farkli isimleri uygun bir collectiona koyalim
-            List<String> iNames=list.stream().filter(t->t.charAt(t.length()-1)=='i').collect(Collectors.toList());
-            System.out.println("iNames = " + iNames);
-        }
 
-    }
+
+
+
 
