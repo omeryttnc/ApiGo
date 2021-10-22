@@ -45,7 +45,10 @@ public class Put_Patch_10_11_12{
             Assert.assertEquals(json.getString("code"),"200");
 
         }
-
+//       putMethod(putMaph.put("name",names.forEach(t->)));
+//        response.prettyPrint();
+//        json=response.jsonPath();
+//        Assert.assertEquals(json.getString("code"),"200");
 
     }
     @Test  //data update with wrong type of email

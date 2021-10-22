@@ -42,7 +42,7 @@ public class FreeStyle {
         // List<String> null_name = name.stream().filter(Objects::nonNull).collect(Collectors.toList());
 //        Assert.assertTrue(name.stream().noneMatch(t->t.equals(null)));
         Assert.assertTrue(name.stream().noneMatch(Objects::isNull));
-        Assert.assertFalse(name.containsAll(null));
+//        Assert.assertFalse(name.containsAll(null));
         // System.out.println(null_name2);
 
         //female sayisi daha mi fazla
@@ -68,6 +68,22 @@ public class FreeStyle {
         Set<String> collect = name.stream().collect(Collectors.toSet());
         Set<String> collect2 = new HashSet<>(name);
         Assert.assertEquals(name.size(), collect.size());
+
+
+
+
+        // Applying 12% VAT on each purchase
+        // Old way:
+//         List costBeforeTax = Arrays.asList(100, 200, 300, 400, 500);
+//         double total = 0;
+//         for (Integer cost : costBeforeTax) {
+//             double price = cost + .12*cost; total = total + price; }
+//         System.out.println("Total : " + total);
+         // New way:
+        List <Integer> costBeforeTax = Arrays.asList(100, 200, 300, 400, 500);
+        double bill = costBeforeTax.stream() .map((cost) -> cost + .12*cost) .reduce((sum, cost) -> sum + cost).get();
+        System.out.println("Total : " + bill);
+        //Output Total : 1680.0 Total : 1680.0
 
     }
 

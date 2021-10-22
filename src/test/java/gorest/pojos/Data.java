@@ -70,6 +70,11 @@ public class Data {
         this.gender = gender;
         this.status = status;
     }
+    public Data(Integer id, String email) {
+        super();
+        this.id = id;
+        this.email = email;
+    }
     /*public Data(String name, String gender, String status) {
         super();
         this.name = name;

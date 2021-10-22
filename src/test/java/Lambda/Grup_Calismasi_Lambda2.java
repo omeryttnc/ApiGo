@@ -1,21 +1,13 @@
 package Lambda;
 
-import gorest.utilities.Driver;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class Grup_Calismasi_Lambda {
+public class Grup_Calismasi_Lambda2 {
     @Test
     public void test() {
         List<Integer> list = new ArrayList<>();
@@ -270,7 +262,8 @@ public class Grup_Calismasi_Lambda {
         personList.add(new Person("pinar", "abla", 30, Arrays.asList(2323213, 1231231)));
         personList.add(new Person("hatice", "abla", 31, Arrays.asList(324567, 4653)));
 
-        /*        homework
+        /*
+        homework
          */
         //how many abla
         long abla = personList.stream().filter(t -> t.surname.equals("abla")).count();
@@ -374,40 +367,6 @@ public class Grup_Calismasi_Lambda {
     }
 
     @Test
-    public void testName() {
-        List<String> almak_istenenler = Arrays.asList("tomatoes", "pepper", "milk", "banana");
-        List<String> alinanlar = Arrays.asList("pepper", "banana");
-        List<String> alinmayacaklar = Arrays.asList("tea", "sugar");
-
-        Map<String, Product> map_in_the_cart = new HashMap<>();
-        map_in_the_cart.put("uzum", new Product("$2.5", "3", "$7.5"));
-        map_in_the_cart.put("limon", new Product("£3", "6", "£18"));
-        map_in_the_cart.put("elma", new Product("£5", "2", "£10"));
-        map_in_the_cart.put("karpuz", new Product("£2", "9", "£18"));
-        map_in_the_cart.put("kereviz", new Product("£3", "6", "£18"));
-
-        double total_Price = 71.5;
-
-        Map<String, Product> map_on_the_invoice = new HashMap<>();
-        map_on_the_invoice.put("uzum", new Product("$2.5", "3", "$7.5"));
-        map_on_the_invoice.put("limon", new Product("£3", "6", "£18"));
-        map_on_the_invoice.put("elma", new Product("£5", "2", "£10"));
-        map_on_the_invoice.put("karpuz", new Product("£2", "9", "£18"));
-        map_on_the_invoice.put("kereviz", new Product("£3", "6", "£18"));
-
-
-//        map_on_the_invoice.put(1,new Product("uzum","$2.5","3","$7.5"));
-//        map_on_the_invoice.put(2,new Product("limon","£3","6","£18"));
-//        map_on_the_invoice.put(3,new Product("elma","£5","2","£10"));
-//        map_on_the_invoice.put(4,new Product("karpuz","£2","9","£18"));
-//        map_on_the_invoice.put(5,new Product("kereviz","£3","6","£18"));
-//
-
-
-        //her bir product in total price i price * quantity mi
-        //total price toplam price a esit mi
-        //invoice deki urunlerle cart deki urunler ayni mi
-
     public void shopping() {
         //soru 1
 
@@ -454,10 +413,8 @@ public class Grup_Calismasi_Lambda {
         public void distinctNumber(){
             //Soru: Create List of square of all distinct numbers
             List<Integer> numbers = Arrays.asList(9, 10, 3, 4, 7, 3, 4);
-
-
-//            List<Integer> newList=numbers.stream().map(t->t*t).distinct().collect(Collectors.toList());
-//            System.out.println("newList = " + newList);
+            List<Integer> newList=numbers.stream().map(t->t*t).distinct().collect(Collectors.toList());
+            System.out.println("newList = " + newList);
         }
         @Test
         public void numbers(){
@@ -507,15 +464,6 @@ public class Grup_Calismasi_Lambda {
 
             /// a/A ile baslayan ve uzunlugu 5 ten kucuk olan isimleri bulalim
 
-    }
-
-
-
-
-
-
-
-}
             List <String> Anames=list.stream().filter(t->t.substring(0,1).toUpperCase().equals("A")&&t.length()<5).collect(Collectors.toList());
             System.out.println("Anames = " + Anames);
             ///i ile biten farkli isimleri uygun bir collectiona koyalim
