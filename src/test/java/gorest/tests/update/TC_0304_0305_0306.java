@@ -3,8 +3,8 @@ package gorest.tests.update;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
-import gorest.utilities.ReusableMethods;
-import gorest.utilities.TestBase;
+//import gorest.utilities.ReusableMethods;
+//import gorest.utilities.TestBase;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
